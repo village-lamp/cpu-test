@@ -1,0 +1,1 @@
+java -jar logisim.jar cpu_test.circ -tty table > C:\Users\24949\Desktop\tools\co-eda-vm\share\logisim\P3\out.txt
