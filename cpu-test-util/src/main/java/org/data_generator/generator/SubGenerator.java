@@ -2,8 +2,10 @@ package org.data_generator.generator;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 
+/**
+ * sub指令生成器类
+ */
 public class SubGenerator extends Generator{
 
     @Override

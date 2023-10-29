@@ -6,17 +6,30 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * 答案检测管理类
+ */
 public class Manager {
     private static final Manager instance = new Manager();
+    //错误统计
+    private int errors = 0;
+    //pc值
     private int pc;
-    private long[] dm = new long[3072];
-    private long[] reg = new long[32];
-    private long inStr;
+    //dm值
+    private final long[] dm = new long[3072];
+    //reg值
+    private final long[] reg = new long[32];
+    //寄存器组写使能
     private int regWrite;
+    //寄存器组写地址
     private int regAddr;
+    //寄存器组写数据
     private long regData;
+    //dm写使能
     private int memWrite;
+    //dm写地址
     private int memAddr;
+    //dm写数据
     private long memData;
 
     private Manager() {}
@@ -25,6 +38,10 @@ public class Manager {
         return instance;
     }
 
+    /**
+     * 检验答案
+     * @param args 输入
+     */
     public void work(String[] args) throws IOException {
         String outPath = args[0];
         String asmPath = args[1];
@@ -33,15 +50,12 @@ public class Manager {
         ArrayList<String> im = (ArrayList<String>) Files.readAllLines(Paths.get(txtPath));
         try (FileInputStream in = new FileInputStream(outPath)) {
             Scanner scanner = new Scanner(in);
-            int i = 0;
+            int i;
             pc = 0x3000;
             while (scanner.hasNext()) {
                 i = (pc - 0x3000) >> 2;
                 if (i >= 689) break;
-                if (i == 74) {
-                    int j = 0;
-                }
-                inStr = hex2Int(im.get(i));
+                long inStr = hex2Long(im.get(i));
                 memAddr = -1;
                 memWrite = -1;
                 memData = -1;
@@ -79,9 +93,17 @@ public class Manager {
             }
         } catch(Exception e) {
             e.printStackTrace();
+            return;
+        }
+        if (errors == 0) {
+            System.out.println("答案正确");
         }
     }
 
+    /**
+     * 运行add指令
+     * @param op 指令
+     */
     public void add(String op) {
         String[] strings = op.split("[ ,$()]+");
         int rd = Integer.parseInt(strings[1]);
@@ -97,6 +119,10 @@ public class Manager {
         reg[rd] = regData;
     }
 
+    /**
+     * 运行sub指令
+     * @param op 指令
+     */
     public void sub(String op) {
         String[] strings = op.split("[ ,$()]+");
         int rd = Integer.parseInt(strings[1]);
@@ -112,6 +138,10 @@ public class Manager {
         reg[rd] = regData;
     }
 
+    /**
+     * 运行ori指令
+     * @param op 指令
+     */
     public void ori(String op) {
         String[] strings = op.split("[ ,$()]+");
         int rt = Integer.parseInt(strings[1]);
@@ -123,6 +153,10 @@ public class Manager {
         reg[rt] = regData;
     }
 
+    /**
+     * 运行lw指令
+     * @param op 指令
+     */
     public void lw(String op) {
         String[] strings = op.split("[ ,$()]+");
         int rt = Integer.parseInt(strings[1]);
@@ -135,6 +169,10 @@ public class Manager {
         reg[rt] = regData;
     }
 
+    /**
+     * 运行sw指令
+     * @param op 指令
+     */
     public void sw(String op) {
         String[] strings = op.split("[ ,$()]+");
         int rt = Integer.parseInt(strings[1]);
@@ -147,6 +185,10 @@ public class Manager {
         dm[memAddr] = memData;
     }
 
+    /**
+     * 运行beq指令
+     * @param op 指令
+     */
     public void beq(String op) {
         String[] strings = op.split("[ ,$()]+");
         int rs = Integer.parseInt(strings[1]);
@@ -157,6 +199,10 @@ public class Manager {
         }
     }
 
+    /**
+     * 运行lui指令
+     * @param op 指令
+     */
     public void lui(String op) {
         String[] strings = op.split("[ ,$()]+");
         int rt = Integer.parseInt(strings[1]);
@@ -168,6 +214,15 @@ public class Manager {
         reg[rt] = regData;
     }
 
+    /**
+     * 检验结果是否正确
+     * @param len 检验长度
+     * @param value 应得值
+     * @param pos 当前读到的位置
+     * @param str 结果字符串
+     * @param row 当前行数
+     * @return pos
+     */
     public int check(int len, long value, int pos, String str, int row) {
         long num = 0;
         byte[] bytes = str.getBytes();
@@ -183,15 +238,24 @@ public class Manager {
         }
         if (num != value && value >= 0) {
             System.out.printf("row:%d - suppose:%d\tactual:%d\n", row, value, num);
+            errors++;
         }
         return pos;
     }
 
+    /**
+     * 将long转化为无符号整型
+     */
     public long long2UnsignedInt(long val) {
         return val % 0xffffffffL;
     }
 
-    public long hex2Int(String str) {
+    /**
+     * 将指令码转化为长整型
+     * @param str 指令码
+     * @return 长整型
+     */
+    public long hex2Long(String str) {
         int size = str.length();
         byte[] bytes = str.getBytes();
         long num = 0;

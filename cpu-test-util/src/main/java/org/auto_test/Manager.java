@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Scanner;
 
+/**
+ * 自动测试管理类
+ */
 public class Manager {
     private static final Manager instance = new Manager();
 
@@ -17,6 +19,10 @@ public class Manager {
         return instance;
     }
 
+    /**
+     * 测试
+     * @param args 输入
+     */
     public void work(String[] args) throws IOException{
         getResource(args[0]);
         getCode(args[1]);
@@ -24,9 +30,13 @@ public class Manager {
         runCirc(args[2]);
     }
 
+    /**
+     * 将电路文件转移
+     * @param circAdr 电路文件路径
+     */
     public void getResource(String circAdr) throws IOException {
         File circ = new File(circAdr);
-        Path circPath = Paths.get("cpu.circ");
+        Path circPath = Paths.get("./resources/cpu.circ");
         File resCirc = new File(circPath.toUri());
         if (resCirc.exists()) {
             Files.delete(circPath);
@@ -34,26 +44,41 @@ public class Manager {
         Files.copy(circ.toPath(), resCirc.toPath());
     }
 
+    /**
+     * 将指令文件转化为指令码
+     * @param path 指令文件路径
+     */
     public void getCode(String path) throws IOException {
-        String command = "java -jar Mars4_5.jar " +
+        String command = "java -jar ./resources/Mars4_5.jar " +
                 path + " nc mc CompactTextAtZero a dump .text HexText " +
-                "test.txt";
+                "./resources/test.txt";
         Process process = Runtime.getRuntime().exec(command);
-        while (process.isAlive());
+        try {
+            process.waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * 向转移后的电路文件填入指令码
+     */
     public void writeRom() throws IOException {
-        Path test = Paths.get("test.txt");
-        Path circ = Paths.get("cpu.circ");
+        Path test = Paths.get("./resources/test.txt");
+        Path circ = Paths.get("./resources/cpu.circ");
         String testStr = new String(Files.readAllBytes(test));
         String circStr = new String(Files.readAllBytes(circ));
         circStr = circStr.replaceAll("addr/data: 12 32\n[^<]*", "addr/data: 12 32\n" + testStr);
         Files.write(circ, circStr.getBytes());
     }
 
+    /**
+     * 生成运行测试电路的批文件，存放在resources中
+     * @param path 结果存放路径
+     */
     public void runCirc(String path) {
-        String command = "java -jar logisim.jar " +
-                "cpu_test.circ -tty table > " + path;
+        String command = "java -jar ./resources/logisim.jar " +
+                "./resources/cpu_test.circ -tty table > " + path;
         File bat = new File("run.bat");
         try (FileOutputStream out = new FileOutputStream(bat)) {
             out.write(command.getBytes());

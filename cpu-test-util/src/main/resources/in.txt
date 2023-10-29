@@ -1,0 +1,11 @@
+C:\Users\24949\Desktop\tools\co-eda-vm\share\logisim\P3\cpu.circ
+C:\Users\24949\Desktop\tools\co-eda-vm\share\logisim\P3\test.asm
+C:\Users\24949\Desktop\tools\co-eda-vm\share\logisim\P3
+
+C:\Users\24949\Desktop\tools\co-eda-vm\share\logisim\P3\auto-test\testfirat.asm
+C:\Users\24949\Desktop\tools\co-eda-vm\share\logisim\P3\out.txt
+C:\Users\24949\Desktop\tools\co-eda-vm\share\logisim\P3\auto-test\text.txt
+
+C:\Users\24949\Desktop\tools\co-eda-vm\share\logisim\P3\out.txt
+D:\programming\gitrepository\github\cpu-test\package\resources\testfirst.asm
+D:\programming\gitrepository\github\cpu-test\package\resources\test.txt

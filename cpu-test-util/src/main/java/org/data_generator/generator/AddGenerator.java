@@ -3,6 +3,9 @@ package org.data_generator.generator;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * add指令生成器类
+ */
 public class AddGenerator extends Generator {
 
     @Override

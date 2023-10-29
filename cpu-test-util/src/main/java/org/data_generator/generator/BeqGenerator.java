@@ -1,10 +1,11 @@
 package org.data_generator.generator;
 
-import org.data_generator.Manager;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * beq指令生成器类
+ */
 public class BeqGenerator extends Generator implements Constant {
 
     @Override

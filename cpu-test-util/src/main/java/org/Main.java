@@ -1,9 +1,15 @@
 package org;
 
 import org.auto_test.AutoTest;
+import org.check_answer.CheckAnswer;
 import org.data_generator.DataGenerator;
 
+/**
+ * 主类，用于判断参数是否正确
+ */
+
 public class Main {
+
     public static void main(String[] args) throws Exception {
         if (args.length == 0) {
             System.out.println("缺少参数，输入java -jar *.jar help来获取用法");
@@ -24,9 +30,17 @@ public class Main {
                     System.out.println("参数错误，输入java -jar *.jar help来获取用法");
                 }
                 break;
+            case "check":
+                if (args.length == 4) {
+                    CheckAnswer.main(new String[]{args[1], args[2], args[3]});
+                } else {
+                    System.out.println("参数错误，输入java -jar *.jar help来获取用法");
+                }
+                break;
             case "help":
-                System.out.println("help\t获取用法\ngenerate\t生成测试文件\n\t\t参数：存放生成的test.asm以及testfirst.asm的路径\n" +
-                        "test\t测试电路，生成测试批文件\n\t\t参数1：电路文件路径\n\t\t参数2：测试文件路径\n\t\t参数3：存放结果文件");
+                System.out.println("help\t\t获取用法\ngenerate\t生成测试文件\n\t\t参数：存放生成的test.asm以及testfirst.asm的路径\n" +
+                        "test\t\t测试电路，生成测试批文件\n\t\t参数1：电路文件路径\n\t\t参数2：测试文件路径\n\t\t参数3：存放结果文件\n" +
+                        "check\t\t检验答案是否正确\n\t\t参数1：结果文件\n\t\t参数2：生成器生成的testfirst.asm文件\n\t\t参数3：存放指令码的文件");
                 break;
             default:
                 System.out.println("参数错误，输入java -jar *.jar help来获取用法");

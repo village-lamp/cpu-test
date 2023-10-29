@@ -1,14 +1,22 @@
 package org.check_answer;
 
 import java.io.IOException;
+import java.util.Scanner;
 
+/**
+ * 答案检验类
+ */
 public class CheckAnswer {
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
             args = new String[3];
-            args[0] = "C:\\Users\\24949\\Desktop\\tools\\co-eda-vm\\share\\logisim\\P3\\out.txt";
-            args[1] = "C:\\Users\\24949\\Desktop\\tools\\co-eda-vm\\share\\logisim\\P3\\auto-test\\testfirst.asm";
-            args[2] = "C:\\Users\\24949\\Desktop\\tools\\co-eda-vm\\share\\logisim\\P3\\auto-test\\test.txt";
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("输入结果文件路径：");
+            args[0] = scanner.nextLine();
+            System.out.println("输入初级指令文件路径：");
+            args[1] = scanner.nextLine();
+            System.out.println("输入指令码文件路径：");
+            args[2] = scanner.nextLine();
         }
         Manager.getManager().work(args);
     }

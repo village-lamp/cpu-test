@@ -8,8 +8,13 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * 数据生成管理类
+ */
+
 public class Manager implements Constant {
     private static final Manager instance = new Manager();
+    //生成器列表
     private final ArrayList<Generator> generators;
 
     private Manager() {
@@ -20,10 +25,15 @@ public class Manager implements Constant {
         return instance;
     }
 
+    /**
+     * 生成初级指令
+     * @param path 初级指令存放的路径
+     */
     public void work(String path) {
         init();
         File file = new File(path + "\\testfirst.asm");
         try (FileOutputStream o = new FileOutputStream(file)) {
+            //随机填入31个寄存器
             for (int i = 31; i >= 1; --i) {
                 Generator.setNow(i);
                 Random random = new Random();
@@ -38,6 +48,7 @@ public class Manager implements Constant {
                 generators.get(2).generate(o);
             }
             Generator.setNow(0);
+            //随机生成指令
             while (Generator.getPc() <= PC_END - 16) {
                 Random random = new Random();
                 int op = random.nextInt(generators.size() - 1);
@@ -51,6 +62,9 @@ public class Manager implements Constant {
         revise(path);
     }
 
+    /**
+     * 初始化生成器列表
+     */
     public void init() {
         generators.add(new AddGenerator());
         generators.add(new SubGenerator());
@@ -61,6 +75,10 @@ public class Manager implements Constant {
         generators.add(new LuiGenerator());
     }
 
+    /**
+     * 将初级指令翻译为可用指令
+     * @param path 指令存放的位置
+     */
     public void revise(String path) {
         File fileIn = new File(path + "\\testfirst.asm");
         File file = new File(path + "\\test.asm");
