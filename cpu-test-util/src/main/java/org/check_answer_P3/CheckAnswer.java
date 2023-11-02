@@ -1,4 +1,4 @@
-package org.check_answer;
+package org.check_answer_P3;
 
 import java.io.IOException;
 import java.util.Scanner;

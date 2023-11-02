@@ -4,13 +4,11 @@ import org.data_generator.Manager;
 
 import java.util.ArrayList;
 
-/**
- * add指令生成器类
- */
-public class AddGenerator extends Generator {
+public class JrGenerator extends Generator {
 
     @Override
     public void generate(ArrayList<Integer> list) {
-        RGenerator.generator(list, "add");
+        Manager.getCode().add("jr $ra");
+        Manager.setPc(Manager.getPc() + 4);
     }
 }

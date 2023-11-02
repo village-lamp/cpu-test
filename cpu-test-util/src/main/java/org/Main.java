@@ -1,7 +1,7 @@
 package org;
 
 import org.auto_test.AutoTest;
-import org.check_answer.CheckAnswer;
+import org.check_answer_P3.CheckAnswer;
 import org.data_generator.DataGenerator;
 
 /**

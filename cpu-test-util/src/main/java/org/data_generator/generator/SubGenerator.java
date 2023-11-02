@@ -1,7 +1,10 @@
 package org.data_generator.generator;
 
+import org.data_generator.Manager;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * sub指令生成器类
@@ -9,12 +12,7 @@ import java.io.IOException;
 public class SubGenerator extends Generator{
 
     @Override
-    public void generate(FileOutputStream o) throws IOException {
-        int rs = randReg();
-        int rt = randReg();
-        int rd = randReg();
-        String str = String.format("sub $%d, $%d, $%d\r\n", rd, rs, rt);
-        setPc(getPc() + 4);
-        o.write(str.getBytes());
+    public void generate(ArrayList<Integer> list) {
+        RGenerator.generator(list, "sub");
     }
 }
