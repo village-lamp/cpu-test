@@ -17,6 +17,6 @@ public class SubCheck extends Check {
         HashMap<Integer, Long> regs = Manager.getRegs();
         long data = over(regs.get(rs) - regs.get(rt));
         Manager.addPc(4);
-        return writeToGrf(Manager.getPc(), rd, data);
+        return writeToGrf(Manager.getPc() - 4, rd, data);
     }
 }

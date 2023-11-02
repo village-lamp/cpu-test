@@ -35,7 +35,7 @@ public class Manager implements Constant {
             String outCome = check.generate(code.get(index));
             if (outCome != null) {
                 pos = getNextOut(out, pos);
-                if (!out.get(pos).matches(OUT)) {
+                if (pos >= out.size()) {
                     System.out.printf("行数少于标准答案，期望输出%s，实际输出为空\n", outCome);
                     return;
                 }
@@ -46,8 +46,8 @@ public class Manager implements Constant {
             }
         }
         pos = getNextOut(out, pos);
-        if (!out.get(pos).matches(OUT)) {
-            System.out.printf("行数多余标准答案，期望输出为空，实际输出为%s\n", out.get(pos));
+        if (pos < out.size()) {
+            System.out.printf("行数多于标准答案，期望输出为空，实际输出为%s\n", out.get(pos));
             return;
         }
         System.out.println("答案正确");

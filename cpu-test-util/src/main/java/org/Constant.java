@@ -21,5 +21,5 @@ public interface Constant {
     //最大循环次数
     int MAX_LOOP = 10;
 
-    String OUT = "@\\d+: .*";
+    String OUT = "@.*: .*<=.*";
 }

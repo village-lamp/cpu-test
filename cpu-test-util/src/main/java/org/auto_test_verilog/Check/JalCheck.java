@@ -13,7 +13,8 @@ public class JalCheck extends Check {
         Hex im = new Hex();
         im.set(code);
         long offset = getImm26(im);
+        String str = writeToGrf(Manager.getPc(), 31, Manager.getPc() + 4);
         Manager.setPc(((Manager.getPc() >> 28) << 28) | (offset << 2));
-        return null;
+        return str;
     }
 }

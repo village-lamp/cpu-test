@@ -16,6 +16,6 @@ public class LuiCheck extends Check {
         HashMap<Integer, Long> regs = Manager.getRegs();
         long data = over(imm << 16);
         Manager.addPc(4);
-        return writeToGrf(Manager.getPc(), rt, data);
+        return writeToGrf(Manager.getPc() - 4, rt, data);
     }
 }

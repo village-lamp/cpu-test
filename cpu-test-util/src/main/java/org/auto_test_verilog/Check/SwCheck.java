@@ -16,7 +16,8 @@ public class SwCheck extends Check {
         int offset = getImm16(im);
         HashMap<Integer, Long> regs = Manager.getRegs();
         long addr = regs.get(base) + offset;
+        addr = addr % 0x10000L;
         Manager.addPc(4);
-        return writeToGrf(Manager.getPc(), rt, Manager.getDm().get((int) addr >> 2));
+        return writeToDm(Manager.getPc() - 4, addr, regs.get(rt));
     }
 }

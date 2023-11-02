@@ -87,7 +87,7 @@ public abstract class Check {
     }
 
     public static Long over(Long num) {
-        return num % 0x100000000L;
+        return (num + 0x100000000L) % 0x100000000L;
     }
 
     public static String writeToGrf(long pc, int target, long data) {
@@ -101,7 +101,7 @@ public abstract class Check {
 
     public static String writeToDm(long pc, long addr, long data) {
         Manager.getDm().put((int) (addr >> 2), data);
-        return String.format("@%s: $%s <= %s", Hex.toHex(pc).print(),
+        return String.format("@%s: *%s <= %s", Hex.toHex(pc).print(),
                 Hex.toHex(addr).print(), Hex.toHex(data).print());
     }
 }
