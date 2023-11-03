@@ -1,10 +1,8 @@
 package org.run_verilog;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.zip.ZipEntry;
@@ -15,7 +13,7 @@ public class Manager {
     public static final String MIPS_PATH = "./resources/mips";
 
     public static void work(String[] args) {
-        boolean ret = true;
+        boolean ret;
         ret = clear();
         if (!ret) {
             System.out.println("清理资源文件夹失败");
@@ -30,7 +28,7 @@ public class Manager {
         } else {
             System.out.println("解压成功");
         }
-        /*ret = translate(args[1]);
+        ret = translate(args[1]);
         if (!ret) {
             System.out.println("翻译失败");
             return;
@@ -39,11 +37,10 @@ public class Manager {
         }
         ret = run();
         if (!ret) {
-            System.out.println("运行失败");
-            return;
+            System.out.println("重编文件失败");
         } else {
-            System.out.println("运行成功");
-        }*/
+            System.out.println("重编文件成功");
+        }
     }
 
     public static boolean clear() {
@@ -76,6 +73,7 @@ public class Manager {
                     continue;
                 }
                 if (entry.getName().equals("mips_tb.v")) {
+                    entry = zip.getNextEntry();
                     continue;
                 }
                 File file = new File(MIPS_PATH, entry.getName());
@@ -88,6 +86,47 @@ public class Manager {
                     return false;
                 }
                 entry = zip.getNextEntry();
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean translate(String path){
+        Path testTxt = Paths.get("./resources/mips/code.txt");
+        try {
+            if (Files.exists(testTxt)) {
+                Files.delete(testTxt);
+            }
+            String command = "java -jar ./resources/Mars4_5.jar " +
+                    path + " nc mc CompactDataAtZero a dump .text HexText " +
+                    "./resources/mips/code.txt";
+            Process process = Runtime.getRuntime().exec(command);
+            process.waitFor();
+        } catch (Exception e) {
+            return false;
+        }
+        return Files.exists(testTxt);
+    }
+
+    public static boolean run() {
+        try {
+            byte[] bytes = Files.readAllBytes(Paths.get("./resources/mips/mips.v"));
+            try (FileOutputStream out = new FileOutputStream("./resources/mips/mips.v")) {
+                File folder = new File("./resources/mips");
+                File[] files = folder.listFiles();
+                for (File file : files) {
+                    if (!file.getName().equals("mips.v") &&
+                        !file.getName().equals("mips_tb.v") &&
+                        file.getName().matches(".*\\.v")) {
+                        String str = String.format("`include \"%s\"\n", file.getName());
+                        out.write(str.getBytes());
+                    }
+                }
+                out.write(bytes);
+            } catch (Exception e) {
+                return false;
             }
         } catch (Exception e) {
             return false;
