@@ -6,13 +6,13 @@
 + 使用cpu-test-verilog.py需要python3
 + 自动运行程序需要将iverilog路径加入path中
 
-**github：**https://github.com/village-lamp/cpu-test
+**github：** https://github.com/village-lamp/cpu-test
 
 ### 文件：
 
-**cpu-test-util：**java项目源代码，实现基础功能
+**cpu-test-util：** java项目源代码，实现基础功能
 
-**cpu-test：**python项目源代码，用于调用cpu-test-util
+**cpu-test：** python项目源代码，用于调用cpu-test-util
 
 ### 使用：
 
