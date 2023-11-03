@@ -1,9 +1,9 @@
+import java.util.Scanner;
+
 public class test {
     public static void main(String[] args) {
-        String ratioN = "0.869";
-        double ratio = Double.parseDouble(ratioN);
-        int hitPoint = 422;
-        System.out.println((int) Math.floor(hitPoint * (1 + ratio)));
-        System.out.println(hitPoint + (int) Math.floor(hitPoint * ratio));
+        String regex = "@\\w{8}: ((\\$(( [1-9])|(\\d{2})))|(\\*\\w{8})) <= \\w{8}";
+        String test = "@00003000: *3424344e <= 4324fe33";
+        System.out.println(test.matches(regex));
     }
 }

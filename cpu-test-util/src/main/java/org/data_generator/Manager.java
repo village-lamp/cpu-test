@@ -193,10 +193,6 @@ public class Manager implements Constant {
         return blocks;
     }
 
-    public static void addBlocks() {
-        blocks++;
-    }
-
     public static void setLastBeq(int val) {
         lastBeq = val;
     }

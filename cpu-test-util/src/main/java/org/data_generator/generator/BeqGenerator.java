@@ -15,10 +15,8 @@ public class BeqGenerator extends Generator implements Constant {
     public void generate(ArrayList<Integer> list) {
         int rs = randReg();
         int rt = randReg();
-        if (Manager.getBeqs() >= 12) {
-            int i = 0;
-        }
         int label = randInt(Manager.getLastBeq(), Manager.getMax() - 1);
+        label = (label >> 2) << 2;
         int lines = ((label - PC_BEGIN) >> 2) - 1;
         while (label < Manager.getPc() &&
                 Manager.getCode().get(lines).matches(".*[lw].*")) {
@@ -30,7 +28,7 @@ public class BeqGenerator extends Generator implements Constant {
             ++lines;
         }
         if (label < Manager.getPc()) {
-            Manager.getCode().add(lines, String.format("ori $0, $%d, %d",
+            Manager.getCode().add(lines, String.format("ori $%d, $0, %d",
                     getCounter(), MAX_LOOP));
             Manager.putAddBeqLabel(lines + 1, Manager.getBeqs() + 1);
             Manager.putAddBeqLabel((Manager.getPc() + 16 - PC_BEGIN) >> 2, Manager.getBeqs());
@@ -40,7 +38,7 @@ public class BeqGenerator extends Generator implements Constant {
             Manager.addBeqs();
             Manager.setPc(Manager.getPc() + 8);
         } else {
-            Manager.putAddBeqLabel(lines, Manager.getBeqs());
+            Manager.putAddBeqLabel(lines + 1, Manager.getBeqs());
         }
         Manager.getCode().add(String.format("beq $%d, $%d, beq", rs, rt) + Manager.getBeqs());
         Manager.addBeqs();

@@ -21,5 +21,5 @@ public interface Constant {
     //最大循环次数
     int MAX_LOOP = 10;
 
-    String OUT = "@.*: .*<=.*";
+    String OUT = "@\\w{8}: ((\\$(( [1-9])|(\\d{2})))|(\\*\\w{8})) <= \\w{8}";
 }

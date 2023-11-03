@@ -44,7 +44,7 @@ public class Manager implements Constant {
             }
         }
         pos = getNextOut(out, pos);
-        if (pos < out.size()) {
+        if (pos < out.size() && !out.get(pos).matches("@00007000: .*")) {
             System.out.printf("行数多于标准答案，期望输出为空，实际输出为%s\n", out.get(pos));
             return;
         }

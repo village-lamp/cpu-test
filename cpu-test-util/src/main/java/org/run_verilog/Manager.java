@@ -67,23 +67,27 @@ public class Manager {
         try (ZipInputStream zip = new ZipInputStream(Files.newInputStream(Paths.get(zipPath)))) {
             ZipEntry entry = zip.getNextEntry();
             while (entry != null) {
-                String name = entry.getName();
-                if (!name.matches(".*\\.v")) {
-                    entry = zip.getNextEntry();
-                    continue;
-                }
-                if (entry.getName().equals("mips_tb.v")) {
-                    entry = zip.getNextEntry();
-                    continue;
-                }
-                File file = new File(MIPS_PATH, entry.getName());
-                try (FileOutputStream out = new FileOutputStream(file)) {
-                    int len;
-                    while ((len = zip.read(buffer)) > 0) {
-                        out.write(buffer, 0, len);
+                if (!entry.isDirectory()) {
+                    String name = entry.getName();
+                    String[] str = name.split("/");
+                    name = str[str.length - 1];
+                    if (!name.matches(".*\\.v")) {
+                        entry = zip.getNextEntry();
+                        continue;
                     }
-                } catch (Exception e) {
-                    return false;
+                    if (entry.getName().equals("mips_tb.v")) {
+                        entry = zip.getNextEntry();
+                        continue;
+                    }
+                    File file = new File(MIPS_PATH, name);
+                    try (FileOutputStream out = new FileOutputStream(file)) {
+                        int len;
+                        while ((len = zip.read(buffer)) > 0) {
+                            out.write(buffer, 0, len);
+                        }
+                    } catch (Exception e) {
+                        return false;
+                    }
                 }
                 entry = zip.getNextEntry();
             }
