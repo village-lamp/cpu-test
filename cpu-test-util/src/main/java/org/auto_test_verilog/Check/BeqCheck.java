@@ -14,10 +14,10 @@ public class BeqCheck extends Check {
         im.set(code);
         int rs = getRs(im);
         int rt = getRt(im);
-        int offset = getImm16(im);
+        short offset = (short) getImm16(im);
         HashMap<Integer, Long> regs = Manager.getRegs();
         if (Objects.equals(regs.get(rs), regs.get(rt))) {
-            Manager.addPc((long) (offset + 1) << 2);
+            Manager.addPc(((int) offset + 1) << 2);
         }
         else {
             Manager.addPc(4);

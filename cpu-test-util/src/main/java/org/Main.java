@@ -29,6 +29,7 @@ public class Main {
                 } else {
                     System.out.println("参数错误，输入java -jar *.jar help来获取用法");
                 }
+                break;
             case "run":
                 if (args.length == 3) {
                     RunVerilog.main(new String[]{args[1], args[2]});
@@ -43,7 +44,6 @@ public class Main {
                 break;
             default:
                 System.out.println("参数错误，输入java -jar *.jar help来获取用法");
-                break;
         }
     }
 }

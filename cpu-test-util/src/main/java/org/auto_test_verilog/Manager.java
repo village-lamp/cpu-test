@@ -3,12 +3,10 @@ import org.Constant;
 import org.auto_test_verilog.Check.Check;
 import org.auto_test_verilog.Check.CheckFactory;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Manager implements Constant {

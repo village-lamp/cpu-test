@@ -27,7 +27,9 @@ public class Manager implements Constant {
      * @param path 初级指令存放的路径
      */
     public static void work(String path) {
-        //random.setSeed(2143242L);
+        long seed = random.nextLong();
+        System.out.printf("开始生成数据，种子为%d\n", seed);
+        random.setSeed(seed);
         init();
         initReg();
         generateMain();

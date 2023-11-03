@@ -30,8 +30,8 @@ public class BeqGenerator extends Generator implements Constant {
             ++lines;
         }
         if (label < Manager.getPc()) {
-            Manager.getCode().add(lines, String.format("ori $%d, $%d, %d",
-                    getCounter(), getCounter(), MAX_LOOP));
+            Manager.getCode().add(lines, String.format("ori $0, $%d, %d",
+                    getCounter(), MAX_LOOP));
             Manager.putAddBeqLabel(lines + 1, Manager.getBeqs() + 1);
             Manager.putAddBeqLabel((Manager.getPc() + 16 - PC_BEGIN) >> 2, Manager.getBeqs());
             SubGenerator subGenerator = new SubGenerator();
