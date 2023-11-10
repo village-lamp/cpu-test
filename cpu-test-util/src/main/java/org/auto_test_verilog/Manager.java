@@ -1,7 +1,7 @@
 package org.auto_test_verilog;
-import org.Constant;
-import org.auto_test_verilog.Check.Check;
-import org.auto_test_verilog.Check.CheckFactory;
+import org.constant.CommonConstant;
+import org.check.Check;
+import org.check.CheckFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Manager implements Constant {
+public class Manager implements CommonConstant {
 
     private static final HashMap<Integer, Long> regs = new HashMap<>();
     private static final HashMap<Integer, Long> dm = new HashMap<>();
