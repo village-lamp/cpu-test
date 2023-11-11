@@ -31,6 +31,12 @@ public class RandomUtil implements RegConstant, CommonConstant {
         lastMid = new int[COUNT_REGS_BEFORE + 1];
         lastLow = new int[COUNT_REGS_BEFORE + 1];
         last = new int[COUNT_REGS_BEFORE + 1];
+        for (int i = 0; i < COUNT_REGS_BEFORE; ++i) {
+            lastHigh[i] = randInt(HIGH_REG_START, HIGH_REG_END);
+            lastMid[i] = randInt(MID_REG_START, MID_REG_END);
+            lastLow[i] = randInt(LOW_REG_START, LOW_REG_END);
+            last[i] = randInt(1, 30);
+        }
         dmValue = new ArrayList<>();
     }
 
@@ -184,7 +190,7 @@ public class RandomUtil implements RegConstant, CommonConstant {
      * @param reg 寄存器编号
      * @return 类型
      */
-    private String getRegType(int reg) {
+    public String getRegType(int reg) {
         if (LOW_REG_START <= reg && reg <= LOW_REG_END) {
             return "low";
         } else if (MID_REG_START <= reg && reg <= MID_REG_END) {
@@ -223,7 +229,7 @@ public class RandomUtil implements RegConstant, CommonConstant {
                 return dmValue.get(i) - baseVal;
             }
         }
-        return baseVal;
+        return -baseVal;
     }
 
     /**
@@ -252,5 +258,14 @@ public class RandomUtil implements RegConstant, CommonConstant {
      */
     public int getLine(int pc) {
         return (pc - PC_BEGIN + 4) / 4;
+    }
+
+    /**
+     * 通过行数得到pc值
+     * @param line 行数
+     * @return pc值
+     */
+    public int getPc(int line) {
+        return 4 * line + PC_BEGIN - 4;
     }
 }

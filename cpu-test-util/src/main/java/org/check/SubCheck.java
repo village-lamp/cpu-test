@@ -1,22 +1,21 @@
 package org.check;
 
-import org.auto_test_verilog.Manager;
+import org.Mips;
 import org.util.Hex;
-
-import java.util.HashMap;
+import org.util.UnsignedInt;
 
 public class SubCheck extends Check {
 
     @Override
-    public String generate(String code) {
+    public String generate(String code, Mips mips) {
         Hex im = new Hex();
         im.set(code);
         int rs = getRs(im);
         int rt = getRt(im);
         int rd = getRd(im);
-        HashMap<Integer, Long> regs = Manager.getRegs();
-        long data = over(regs.get(rs) - regs.get(rt));
-        Manager.addPc(4);
-        return writeToGrf(Manager.getPc() - 4, rd, data);
+        long[] regs = mips.getRegs();
+        long data = UnsignedInt.over(regs[rs] - regs[rt]);
+        mips.addPc(4);
+        return mips.writeToGrf(mips.getPc() - 4, rd, data);
     }
 }

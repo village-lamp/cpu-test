@@ -33,27 +33,38 @@ public class Manager implements CommonConstant, RegConstant {
         print(path);
     }
 
-    //生成代码
+    /**
+     * 生成代码
+     */
     public static void generate() {
         while (mips.getPc() <= PC_END) {
             if (mips.getBlock() != null) {
-                if (mips.getPc() + 12 == mips.getBlockPc()) {
+                if (mips.getCodeStr().get(mips.getPc() + 8) != null) {
                     if ("beq".equals(mips.getBlock())) {
                         //beq跳出空白块
                         int rs = randomUtil.randomReg(true);
-                        mips.putCodeStr(String.format("beq $%d, $%d, line%d",
-                                rs, rs, randomUtil.getLine(mips.getBlockPc())));
+                        String codeStr = String.format("beq $%d, $%d, line%d",
+                                rs, rs, randomUtil.getLine(mips.getBlockPc()));
+                        mips.putCodeStr(codeStr);
+                        mips.putCode(generators.get(5).translate(codeStr));
                     } else {
                         //jal跳出空白块
-                        mips.putCodeStr("jr $ra");
+                        String codeStr = "jr $31";
+                        mips.putCodeStr(codeStr);
+                        mips.putCode(generators.get(8).translate(codeStr));
                     }
                     mips.addPc(4);
                     mips.putCodeStr("nop");
+                    mips.putCode("00000000");
                     mips.setPc(mips.getBlockPc());
+                    mips.setBlock(null, 0);
                     continue;
                 }
             }
             int op = randomUtil.randInt(generators.size() - 1);
+            if (mips.getPc() == 0x38f8) {
+                int j = 0;
+            }
             generators.get(op).generate();
         }
     }
@@ -89,29 +100,35 @@ public class Manager implements CommonConstant, RegConstant {
 
     //打印代码
     public static void print(String path) {
-        path += "\\test.asm";
-        TreeMap<Integer, String> code = new TreeMap<>(mips.getCodeStr());
-        try (FileOutputStream fileOutputStream = new FileOutputStream(path)) {
-            for (Map.Entry<Integer, String> entry : code.entrySet()) {
-                String str;
-                if (entry.getKey() == 0x3000) {
-                    str = ".ktext\r\n";
-                    fileOutputStream.write(str.getBytes());
+        int nopCount = 0;
+        try (FileOutputStream asm = new FileOutputStream(path + "\\test.asm")) {
+            try (FileOutputStream txt = new FileOutputStream(path + "\\test.txt")) {
+                for (int i = PC_BEGIN; i <= PC_END; i += 4) {
+                    String str = mips.getCodeStr().get(i);
+                    String strTxt = mips.getCode().get(i) + '\n';
+                    if (str == null) {
+                        str = "nop";
+                        strTxt = "00000000\n";
+                        ++nopCount;
+                    }
+                    str = String.format("line%d: ", randomUtil.getLine(i)) + str + "\r\n";
+                    asm.write(str.getBytes());
+                    txt.write(strTxt.getBytes());
                 }
-                str = String.format("line%d:", randomUtil.getLine(entry.getKey()));
-                str += entry.getValue() + "\r\n";
-                fileOutputStream.write(str.getBytes());
             }
         } catch (Exception e) {
             System.out.println("写入test.asm失败");
             return;
         }
         System.out.println("生成test.asm成功");
+        double cover = 1 - ((nopCount << 2) / (double) (PC_END - PC_BEGIN));
+        System.out.println("指令生成率:" + cover);
     }
 
     public static void init() {
         Random random = new Random();
         long seed = random.nextLong();
+        //long seed = -8147529146551728134L;
         System.out.printf("开始生成数据，种子为%d\n", seed);
         mips = new Mips();
         randomUtil = new RandomUtil(seed);

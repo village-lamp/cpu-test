@@ -1,11 +1,11 @@
 package org.check;
 
-import org.auto_test_verilog.Manager;
+import org.Mips;
 import org.util.Hex;
 
 public abstract class Check {
 
-    public abstract String generate(String code);
+    public abstract String generate(String code, Mips mips);
 
     public static String analyse(String code) {
         String type;
@@ -82,24 +82,5 @@ public abstract class Check {
 
     public static int getFunct(Hex im) {
         return im.toDec(0, 5);
-    }
-
-    public static Long over(Long num) {
-        return (num + 0x100000000L) % 0x100000000L;
-    }
-
-    public static String writeToGrf(long pc, int target, long data) {
-        if (target == 0) {
-            return null;
-        }
-        Manager.getRegs().put(target, data);
-        return String.format("@%s: $%2d <= %s", Hex.toHex(pc).print(),
-                target, Hex.toHex(data).print());
-    }
-
-    public static String writeToDm(long pc, long addr, long data) {
-        Manager.getDm().put((int) (addr >> 2), data);
-        return String.format("@%s: *%s <= %s", Hex.toHex(pc).print(),
-                Hex.toHex(addr).print(), Hex.toHex(data).print());
     }
 }

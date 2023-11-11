@@ -78,6 +78,16 @@ public class Hex {
         }
     }
 
+    public static Hex toHex(String bin) {
+        byte[] bytes = bin.getBytes();
+        long num = 0;
+        for (int i = 0; i < bin.length(); ++i) {
+            num <<= 1;
+            num += (bytes[i] == '0') ? 0 : 1;
+        }
+        return toHex(num);
+    }
+
     public static Hex toHex(long num) {
         Hex hex = new Hex();
         StringBuilder str = new StringBuilder();
@@ -89,7 +99,8 @@ public class Hex {
         return hex;
     }
 
-    public String print() {
+    @Override
+    public String toString() {
         StringBuilder str = new StringBuilder();
         for (int i = hex.length - 1; i >= 0; --i) {
             str.append(hex[i]);

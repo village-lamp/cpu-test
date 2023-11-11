@@ -13,6 +13,9 @@ import java.util.regex.Pattern;
  */
 public class OriGenerator extends Generator {
 
+    //中级寄存器时，rs寄存器为0的概率的倒数
+    public static final int ORI_ZERO_RATIO = 4;
+
     public OriGenerator(Mips mips, RandomUtil random) {
         super(mips, random);
     }
@@ -21,6 +24,10 @@ public class OriGenerator extends Generator {
     public void generate() {
         int rt = getRandom().randomReg(false);
         int rs = getRandom().randomReg(true, rt);
+        if (!"high".equals(getRandom().getRegType(rt))) {
+            int isZero = getRandom().randInt(1, ORI_ZERO_RATIO);
+            rs = (isZero == 1) ? 0 : rs;
+        }
         int imm = getRandom().randomUnsignedImm(rt);
         getRandom().updateByType(rt);
         String codeStr = String.format("ori $%d, $%d, %d", rt, rs, imm);

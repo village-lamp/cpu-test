@@ -1,10 +1,8 @@
-package org.run_verilog;
+package org.depress_mips;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -27,13 +25,6 @@ public class Manager {
             return;
         } else {
             System.out.println("解压成功");
-        }
-        ret = translate(args[1]);
-        if (!ret) {
-            System.out.println("翻译失败");
-            return;
-        } else {
-            System.out.println("翻译成功");
         }
         ret = run();
         if (!ret) {
@@ -95,23 +86,6 @@ public class Manager {
             return false;
         }
         return true;
-    }
-
-    public static boolean translate(String path){
-        Path testTxt = Paths.get("./resources/mips/code.txt");
-        try {
-            if (Files.exists(testTxt)) {
-                Files.delete(testTxt);
-            }
-            String command = "java -jar ./resources/Mars4_5.jar " +
-                    path + " nc mc CompactDataAtZero a dump .text HexText " +
-                    "./resources/mips/code.txt";
-            Process process = Runtime.getRuntime().exec(command);
-            process.waitFor();
-        } catch (Exception e) {
-            return false;
-        }
-        return Files.exists(testTxt);
     }
 
     public static boolean run() {

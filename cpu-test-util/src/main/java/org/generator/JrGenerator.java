@@ -20,31 +20,33 @@ public class JrGenerator extends Generator implements CommonConstant, RegConstan
         int rs = MID_REG_START;
         for (; rs <= MID_REG_END; ++rs) {
             if (getMips().getReg(rs) % 4 == 0) {
+                int pc = (int) getMips().getReg(rs);
+                if (pc < PC_BEGIN || pc > getMips().getPc() + JUMP_MAX) continue;
+                if (pc <= getMips().getPc()) {
+                    Mips testMips = getMips().clone();
+                    testMips.run(getMips().getPc(), MAX_RUNTIMES);
+                    if (testMips.getPc() == getMips().getPc()) {
+                        continue;
+                    } else {
+                        if (getMips().getCodeStr().get(testMips.getPc() + 4) != null) {
+                            continue;
+                        }
+                        getMips().setDm(testMips.getDm());
+                        getMips().setRegs(testMips.getRegs());
+                        getMips().setBlock("beq", getMips().getPc() + 4);
+                        pc = testMips.getPc();
+                    }
+                }
+                String codeStr = String.format("jr $%d", rs);
+                getMips().putCodeStr(codeStr);
+                getMips().putCode(translate(codeStr));
+                getMips().addPc(4);
+                getMips().putCodeStr("nop");
+                getMips().putCode("00000000");
+                getMips().setPc(pc);
                 break;
             }
         }
-        int pc = (int) getMips().getReg(rs);
-        if (pc % 4 != 0) return;
-        if (pc < PC_BEGIN || pc > getMips().getPc() + JUMP_MAX) return;
-        if (pc <= getMips().getPc()) {
-            Mips testMips = getMips().clone();
-            testMips.run(getMips().getPc());
-            if (testMips.getPc() == getMips().getPc()) {
-                return;
-            } else {
-                getMips().setDm(testMips.getDm());
-                getMips().setRegs(testMips.getRegs());
-                getMips().setBlock("beq", getMips().getPc() + 4);
-                pc = testMips.getPc();
-            }
-        }
-        String codeStr = String.format("jr $%d", rs);
-        getMips().putCodeStr(codeStr);
-        getMips().putCode(translate(codeStr));
-        getMips().addPc(4);
-        getMips().putCodeStr("nop");
-        getMips().putCode("00000000000000000000000000000000");
-        getMips().setPc(pc);
     }
 
     @Override
@@ -55,7 +57,7 @@ public class JrGenerator extends Generator implements CommonConstant, RegConstan
         matcher.find();
         str += MipsCode.getReg(Integer.parseInt(matcher.group(1))) +
                 MipsCode.getReg(0) + MipsCode.getReg(0);
-        str += "001000";
+        str += "00000001000";
         return str;
     }
 }

@@ -1,17 +1,20 @@
 package org.check;
 
-import org.auto_test_verilog.Manager;
+import org.Mips;
 import org.util.Hex;
 
 public class JalCheck extends Check {
 
     @Override
-    public String generate(String code) {
+    public String generate(String code, Mips mips) {
+        if ("jal".equals(mips.getBlock())) {
+            mips.setBlock("beq", mips.getBlockPc());
+        }
         Hex im = new Hex();
         im.set(code);
         long offset = getImm26(im);
-        String str = writeToGrf(Manager.getPc(), 31, Manager.getPc() + 8);
-        Manager.setPc(((Manager.getPc() >> 28) << 28) | (offset << 2));
+        String str = mips.writeToGrf(mips.getPc(), 31, mips.getPc() + 8);
+        mips.setPc((int) (((mips.getPc() >> 28) << 28) | (offset << 2)));
         return str;
     }
 }

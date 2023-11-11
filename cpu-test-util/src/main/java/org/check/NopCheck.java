@@ -1,12 +1,12 @@
 package org.check;
 
-import org.auto_test_verilog.Manager;
+import org.Mips;
 
 public class NopCheck extends Check {
 
     @Override
-    public String generate(String code) {
-        Manager.addPc(4);
+    public String generate(String code, Mips mips) {
+        mips.addPc(4);
         return null;
     }
 }

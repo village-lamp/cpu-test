@@ -1,21 +1,19 @@
 package org.check;
 
-import org.auto_test_verilog.Manager;
+import org.Mips;
 import org.util.Hex;
-
-import java.util.HashMap;
+import org.util.UnsignedInt;
 
 public class LuiCheck extends Check {
 
     @Override
-    public String generate(String code) {
+    public String generate(String code, Mips mips) {
         Hex im = new Hex();
         im.set(code);
         int rt = getRt(im);
         long imm = getImm16(im);
-        HashMap<Integer, Long> regs = Manager.getRegs();
-        long data = over(imm << 16);
-        Manager.addPc(4);
-        return writeToGrf(Manager.getPc() - 4, rt, data);
+        long data = UnsignedInt.over(imm << 16);
+        mips.addPc(4);
+        return mips.writeToGrf(mips.getPc() - 4, rt, data);
     }
 }

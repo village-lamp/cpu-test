@@ -3,6 +3,7 @@ package org;
 import org.check.Check;
 import org.check.CheckFactory;
 import org.constant.CommonConstant;
+import org.util.Hex;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ public class Mips implements CommonConstant, Cloneable {
     //该cpu中的代码段
     private final HashMap<Integer, String> codeStr;
     //十六进制代码
-    private final HashMap<Integer, String> code;
+    private HashMap<Integer, String> code;
     //数据段
     private HashMap<Integer, Long> dm;
     //当前空白块所属指令
@@ -54,15 +55,24 @@ public class Mips implements CommonConstant, Cloneable {
      * @param pcEnd 当pc与pcEnd相等时停止，用于判定是否循环
      * @return 运行结果
      */
-    public ArrayList<String> run(int pcEnd) {
+    public ArrayList<String> run(int pcEnd, int maxTimes) {
         ArrayList<String> out = new ArrayList<>();
-        do {
+        int times = 0;
+        while (pc <= PC_END && pc != pcEnd) {
+            ++times;
             String str = check();
-            if (check() != null) {
+            if ("null".equals(str)) {
                 return null;
             }
             out.add(str);
-        } while (pc <= PC_END && pc != pcEnd);
+            if (maxTimes <= times && maxTimes != -1) {
+                pc = pcEnd;
+                return null;
+            }
+            if (pc == 0xfff7) {
+                int j = 0;
+            }
+        }
         return out;
     }
 
@@ -70,10 +80,10 @@ public class Mips implements CommonConstant, Cloneable {
         CheckFactory checkFactory = new CheckFactory();
         String line = code.get(pc);
         if (line == null) {
-            return null;
+            return "null";
         }
         Check check = checkFactory.create(Check.analyse(line));
-        return check.generate(line);
+        return check.generate(line, this);
     }
 
     public int getPc() {
@@ -93,7 +103,7 @@ public class Mips implements CommonConstant, Cloneable {
     }
 
     public void putCode(String code) {
-        this.code.put(pc, code);
+        this.code.put(pc, Hex.toHex(code).toString());
     }
 
     public long getReg(int base) {
@@ -137,8 +147,16 @@ public class Mips implements CommonConstant, Cloneable {
         blockPc = val;
     }
 
+    public HashMap<Integer, String> getCode() {
+        return code;
+    }
+
     public HashMap<Integer, String> getCodeStr() {
         return codeStr;
+    }
+
+    public void setCode(HashMap<Integer, String> code) {
+        this.code = code;
     }
 
     @Override
@@ -146,9 +164,27 @@ public class Mips implements CommonConstant, Cloneable {
         try {
             Mips clone = (Mips) super.clone();
             clone.setDm(new HashMap<>(dm));
+            long[] nRegs = new long[32];
+            System.arraycopy(regs, 0, nRegs, 0, 32);
+            clone.setRegs(nRegs);
             return clone;
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public String writeToGrf(long pc, int target, long data) {
+        if (target == 0) {
+            return null;
+        }
+        regs[target] = data;
+        return String.format("@%s: $%2d <= %s\n", Hex.toHex(pc),
+                target, Hex.toHex(data));
+    }
+
+    public String writeToDm(long pc, int addr, long data) {
+        dm.put(addr, data);
+        return String.format("@%s: *%s <= %s\n", Hex.toHex(pc),
+                Hex.toHex(addr), Hex.toHex(data));
     }
 }

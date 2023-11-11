@@ -1,26 +1,23 @@
 package org.check;
 
-import org.auto_test_verilog.Manager;
+import org.Mips;
 import org.util.Hex;
-
-import java.util.HashMap;
-import java.util.Objects;
 
 public class BeqCheck extends Check {
 
     @Override
-    public String generate(String code) {
+    public String generate(String code, Mips mips) {
         Hex im = new Hex();
         im.set(code);
         int rs = getRs(im);
         int rt = getRt(im);
         short offset = (short) getImm16(im);
-        HashMap<Integer, Long> regs = Manager.getRegs();
-        if (Objects.equals(regs.get(rs), regs.get(rt))) {
-            Manager.addPc(((int) offset + 1) << 2);
+        long[] regs = mips.getRegs();
+        if (regs[rs] == regs[rt]) {
+            mips.addPc(((int) offset + 1) << 2);
         }
         else {
-            Manager.addPc(4);
+            mips.addPc(4);
         }
         return null;
     }

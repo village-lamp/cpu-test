@@ -19,26 +19,47 @@ public class JalGenerator extends Generator implements CommonConstant {
         if (getMips().getBlock() != null) {
             return;
         }
-        int pc = getRandom().randInt(PC_BEGIN, getMips().getPc() + JUMP_MAX);
-        if (pc <= getMips().getPc()) {
-            Mips testMips = getMips().clone();
-            testMips.run(getMips().getPc());
-            if (testMips.getPc() == getMips().getPc()) {
-                return;
-            } else {
-                getMips().setDm(testMips.getDm());
-                getMips().setRegs(testMips.getRegs());
-                getMips().setBlock("jal", getMips().getPc() + 4);
-                pc = testMips.getPc();
+        for (int i = 1; i <= TRY_TIMES; ++i) {
+            int pc = getRandom().randInt(PC_BEGIN, getMips().getPc() + JUMP_MAX);
+            pc = pc & 0xfffffffc;
+            int npc = pc;
+            if (getRandom().getLine(pc) == 497) {
+                int j = 0;
             }
+            if (pc <= getMips().getPc()) {
+                Mips testMips = getMips().clone();
+                testMips.setPc(pc);
+                testMips.setReg(31, getMips().getPc() + 8);
+                testMips.setBlock("jal", 0);
+                testMips.run(getMips().getPc(), MAX_RUNTIMES);
+                if (testMips.getPc() == getMips().getPc()) {
+                    continue;
+                } else {
+                    if (getMips().getCodeStr().get(testMips.getPc() + 4) != null) {
+                        continue;
+                    }
+                    getMips().setDm(testMips.getDm());
+                    getMips().setRegs(testMips.getRegs());
+                    npc = testMips.getPc();
+                    if (testMips.getPc() < getMips().getPc()) {
+                        getMips().setBlock(testMips.getBlock(), getMips().getPc() + 8);
+                    }
+                }
+            }
+            if (pc == getMips().getPc() + 4) {
+                pc += 4;
+                npc += 4;
+            }
+            String codeStr = String.format("jal line%d", getRandom().getLine(pc));
+            getMips().setReg(31, getMips().getPc() + 8);
+            getMips().putCodeStr(codeStr);
+            getMips().putCode(translate(codeStr));
+            getMips().addPc(4);
+            getMips().putCodeStr("nop");
+            getMips().putCode("00000000");
+            getMips().setPc(npc);
+            break;
         }
-        String codeStr = String.format("jal line%d", getRandom().getLine(pc));
-        getMips().putCodeStr(codeStr);
-        getMips().putCode(translate(codeStr));
-        getMips().addPc(4);
-        getMips().putCodeStr("nop");
-        getMips().putCode("00000000000000000000000000000000");
-        getMips().setPc(pc);
     }
 
     @Override
@@ -47,8 +68,8 @@ public class JalGenerator extends Generator implements CommonConstant {
         Pattern pattern = Pattern.compile("jal line(\\d*)");
         Matcher matcher = pattern.matcher(codeStr);
         matcher.find();
-        int imm = Integer.parseInt(matcher.group(1)) -
-                getRandom().getLine(getMips().getPc()) - 1;
+        int imm = Integer.parseInt(matcher.group(1));
+        imm = getRandom().getPc(imm) >> 2;
         str += MipsCode.getImm26(imm);
         return str;
     }

@@ -20,10 +20,16 @@ public class LwGenerator extends Generator {
 
     @Override
     public void generate() {
-        int base = getRandom().randomLow(true);
+        int base;
+        do {
+            base = getRandom().randomReg(true);
+        } while ("high".equals(getRandom().getRegType(base)));
         int rt = getRandom().randomHigh(false);
         int baseVal = (int) getMips().getReg(base);
-        int offset = getRandom().randomDm(baseVal) - baseVal;
+        int offset = getRandom().randomDm(baseVal);
+        if (Math.abs(offset) >= 0x7fff) {
+            return;
+        }
         String codeStr = String.format("lw $%d, %d($%d)", rt, offset, base);
         getMips().putCodeStr(codeStr);
         getMips().putCode(translate(codeStr));
@@ -34,7 +40,7 @@ public class LwGenerator extends Generator {
     @Override
     public String translate(String codeStr) {
         String str = "100011";
-        Pattern pattern =Pattern.compile("lw \\$(\\d*), (\\d*)\\((\\$\\d*)\\)");
+        Pattern pattern =Pattern.compile("lw \\$(\\d*), ([-\\d]*)\\(\\$(\\d*)\\)");
         Matcher matcher = pattern.matcher(codeStr);
         matcher.find();
         str += MipsCode.getReg(Integer.parseInt(matcher.group(3))) +

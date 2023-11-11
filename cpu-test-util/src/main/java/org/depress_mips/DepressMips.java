@@ -1,17 +1,14 @@
-package org.run_verilog;
+package org.depress_mips;
 
-import java.io.IOException;
 import java.util.Scanner;
 
-public class RunVerilog {
+public class DepressMips {
     public static void main(String[] args) {
         if (args.length == 0) {
             Scanner scanner = new Scanner(System.in);
-            args = new String[2];
+            args = new String[1];
             System.out.println("输入zip文件路径");
             args[0] = scanner.nextLine();
-            System.out.println("输入test.asm文件路径");
-            args[1] = scanner.nextLine();
         }
         Manager.work(args);
     }

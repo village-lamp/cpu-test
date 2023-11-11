@@ -21,9 +21,15 @@ public class SwGenerator extends Generator implements CommonConstant {
 
     @Override
     public void generate() {
-        int base = getRandom().randomLow(true);
+        int base;
+        do {
+            base = getRandom().randomReg(true);
+        } while ("high".equals(getRandom().getRegType(base)));
         int rt = getRandom().randomHigh(true);
         int baseVal = (int) getMips().getReg(base);
+        if (Math.max(0, -0x7fff + baseVal) > Math.min(DM_END, 0x7fff + baseVal)) {
+            return;
+        }
         int addr = getRandom().randInt(Math.max(0, -0x7fff + baseVal),
                 Math.min(DM_END, 0x7fff + baseVal)) & 0xfffffffc;
         int offset = addr - baseVal;
@@ -32,18 +38,18 @@ public class SwGenerator extends Generator implements CommonConstant {
         getMips().putCode(translate(codeStr));
         getRandom().addValueToDm(addr);
         getRandom().updateHigh(rt);
-        getRandom().updateLow(baseVal);
         getMips().check();
     }
 
     @Override
     public String translate(String codeStr) {
         String str = "101011";
-        Pattern pattern =Pattern.compile("sw \\$(\\d*), (\\d*)\\((\\$\\d*)\\)");
-        Matcher matcher = pattern.matcher(str);
-        str += MipsCode.getReg(Integer.parseInt(matcher.group(2))) +
-                MipsCode.getReg(Integer.parseInt(matcher.group(0))) +
-                MipsCode.getImm16(Integer.parseInt(matcher.group(1)));
+        Pattern pattern =Pattern.compile("sw \\$(\\d*), ([-\\d]*)\\(\\$(\\d*)\\)");
+        Matcher matcher = pattern.matcher(codeStr);
+        matcher.find();
+        str += MipsCode.getReg(Integer.parseInt(matcher.group(3))) +
+                MipsCode.getReg(Integer.parseInt(matcher.group(1))) +
+                MipsCode.getImm16(Integer.parseInt(matcher.group(2)));
         return str;
     }
 }

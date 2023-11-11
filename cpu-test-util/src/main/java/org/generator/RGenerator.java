@@ -47,7 +47,11 @@ public class RGenerator extends Generator {
         str += MipsCode.getReg(Integer.parseInt(matcher.group(2))) +
                 MipsCode.getReg(Integer.parseInt(matcher.group(3))) +
                 MipsCode.getReg(Integer.parseInt(matcher.group(1)));
-        str += "100000";
+        if ("add".equals(type)) {
+            str += "00000100000";
+        } else {
+            str += "00000100010";
+        }
         return str;
     }
 }

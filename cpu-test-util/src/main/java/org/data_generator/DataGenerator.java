@@ -12,9 +12,9 @@ public class DataGenerator {
         if (args.length == 0) {
             Scanner scanner = new Scanner(System.in);
             args = new String[1];
-            //System.out.println("输入指令存放地址：");
-            //args[0] = scanner.nextLine();
-            args[0] = ".";
+            System.out.println("输入指令存放地址：");
+            args[0] = scanner.nextLine();
+            //args[0] = ".";
         }
         Manager.work(args[0]);
     }
