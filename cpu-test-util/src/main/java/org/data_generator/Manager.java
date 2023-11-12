@@ -138,7 +138,7 @@ public class Manager implements CommonConstant, RegConstant {
     public static void init() {
         Random random = new Random();
         long seed = random.nextLong();
-//        long seed = 296190157773772767L;
+//        long seed = 1586263055370399576L;
         System.out.printf("开始生成数据，种子为%d\n", seed);
         mips = new Mips();
         randomUtil = new RandomUtil(seed);

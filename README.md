@@ -57,21 +57,18 @@ $\color{red}{注：运行失败代表数据生成错误}$
 
 + 覆盖率不足：
 
-  转发方面：缺少cal_rr<jal   cal_ri<jal   br_r2<load  loac<cal_rr  load<load  load<lui   load<jal   store<load   store<lui   store<jal   jr<load  jr<cal_rr
+  转发方面：缺少load<lui
 
-  难出现 jr<cal_ri  
-
-  暂停方面：缺少br_r2<cal_rr  br_r2<load  load<load  store<load  jr<cal_rr  jr<load
-
-  难出现  jr<cal_ri
+  所有与jr相关的暂停和转发都很难出现
 
 + 还是有死循环的几率
 
 + 目前其实只做了自动生成的部分，手动添加指令文件暂时没有实现
 
++ 0寄存器相关问题无法测出
+
 ### 改进：
 
-+ 目前将寄存器分为了高级中级低级三类，而计算类指令只计算高级寄存器，使得相关的一些冒险难以出现，所以将计算类指令更改为使用所有寄存器。
 + 目前向dm中存储的全部都是高级寄存器，可以将dm中也分为三个区域
 + jr使用中级寄存器的情况不容易出现，考虑再增加一类寄存器（可能实现起来较难）
 

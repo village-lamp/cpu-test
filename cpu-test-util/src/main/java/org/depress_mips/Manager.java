@@ -60,6 +60,8 @@ public class Manager {
                     }
                     return file.delete();
                 }
+            } else {
+                return false;
             }
         } catch (Exception e) {
             return false;

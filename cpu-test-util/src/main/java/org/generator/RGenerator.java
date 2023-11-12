@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 /**
  * R类指令生成器
- * R类指令只使用高级寄存器
+ * R类指令使用所有寄存器
  */
 public abstract class RGenerator extends Generator {
 
@@ -23,15 +23,18 @@ public abstract class RGenerator extends Generator {
     @Override
     public void generate() {
         //生成寄存器，rs和rt都需要构造冒险
-        int rs = getRandom().randomHigh(true);
+        int rd = getRandom().randomReg(false);
+        int rs = getRandom().randomReg(true, rd);
         int rt;
         //rs与rt不相同
         do {
-            rt = getRandom().randomHigh(true);
+            rt = getRandom().randomReg(true, rd);
         } while(rt == rs);
-        int rd = getRandom().randomHigh(false);
+        if (!getRandom().isLegal(rd, calc(rs, rt))) {
+            return;
+        }
         //更新高级寄存器
-        getRandom().updateHigh(rd);
+        getRandom().update(rd);
         String codeStr = String.format("%s $%d, $%d, $%d", type, rd, rs, rt);
         getMips().putCodeStr(codeStr);
         getMips().putCode(translate(codeStr));
@@ -57,4 +60,10 @@ public abstract class RGenerator extends Generator {
      * @return “00000” + funct字符串
      */
     public abstract String getFunct();
+
+    /**
+     * 计算指令结果
+     * @return 结果
+     */
+    public abstract long calc(int rs, int rt);
 }

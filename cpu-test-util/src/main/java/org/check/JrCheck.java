@@ -11,7 +11,8 @@ public class JrCheck extends Check implements CommonConstant {
         Hex im = new Hex();
         im.set(code);
         int rs = getRs(im);
-        if (mips.getRegs()[rs] > PC_END || mips.getRegs()[rs] < PC_BEGIN) {
+        if (mips.getRegs()[rs] > PC_END || mips.getRegs()[rs] < PC_BEGIN ||
+        mips.getRegs()[rs] % 4 != 0) {
             return "null";
         }
         mips.setPc((int) mips.getRegs()[rs]);

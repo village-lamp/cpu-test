@@ -63,12 +63,13 @@ public class Mips implements CommonConstant, Cloneable, RegConstant {
         while (pc <= PC_END && pc != pcEnd) {
             ++times;
             String str = check();
-            //返回"null"代表运行错误
-            if ("null".equals(str)) {
+            //返回"none"代表没有指令
+            if ("none".equals(str)) {
                 return null;
             }
             out.add(str);
-            if (maxTimes <= times) {
+            //返回"null"代表运行错误
+            if (maxTimes <= times || "null".equals(str)) {
                 //此处赋值是为了满足beq生成的判定
                 for (int i = LOW_REG_START; i <= LOW_REG_END; ++i) {
                     regs[i] = 0;
@@ -88,7 +89,7 @@ public class Mips implements CommonConstant, Cloneable, RegConstant {
         CheckFactory checkFactory = new CheckFactory();
         String line = code.get(pc);
         if (line == null) {
-            return "null";
+            return "none";
         }
         Check check = checkFactory.create(Check.analyse(line));
         return check.check(line, this);

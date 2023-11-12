@@ -24,12 +24,13 @@ public class OriGenerator extends Generator {
     public void generate() {
         int rt = getRandom().randomReg(false);
         int rs = getRandom().randomReg(true, rt);
+        //不是高级寄存器的情况下，才选择or $0
         if (!"high".equals(getRandom().getRegType(rt))) {
             int isZero = getRandom().randInt(1, ORI_ZERO_RATIO);
             rs = (isZero == 1) ? 0 : rs;
         }
         int imm = getRandom().randomUnsignedImm(rt);
-        getRandom().updateByType(rt);
+        getRandom().update(rt);
         String codeStr = String.format("ori $%d, $%d, %d", rt, rs, imm);
         getMips().putCodeStr(codeStr);
         getMips().putCode(translate(codeStr));

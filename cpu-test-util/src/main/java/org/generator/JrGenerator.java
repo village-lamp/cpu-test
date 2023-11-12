@@ -29,7 +29,8 @@ public class JrGenerator extends Generator implements CommonConstant, RegConstan
         for (; rs <= MID_REG_END; ++rs) {
             if (getMips().getReg(rs) % 4 == 0) {
                 int pc = (int) getMips().getReg(rs);
-                if (pc < PC_BEGIN || pc > getMips().getPc() + JUMP_MAX) continue;
+                if (pc < PC_BEGIN || pc > getMips().getPc() + JUMP_MAX||
+                pc == getMips().getPc() + 4) continue;
 
                 //尝试执行
                 if (pc <= getMips().getPc()) {

@@ -21,7 +21,7 @@ public class LuiGenerator extends Generator {
     public void generate() {
         int rt = getRandom().randomHigh(false);
         int imm = getRandom().randomUnsignedImm();
-        getRandom().updateHigh(rt);
+        getRandom().update(rt);
         String codeStr = String.format("lui $%d, %d", rt, imm);
         getMips().putCodeStr(codeStr);
         getMips().putCode(translate(codeStr));

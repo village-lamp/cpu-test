@@ -25,16 +25,16 @@ public class LwGenerator extends Generator {
         do {
             base = getRandom().randomReg(true);
         } while ("high".equals(getRandom().getRegType(base)));
-        int rt = getRandom().randomHigh(false);
+        int rt = getRandom().randomReg(false);
         int baseVal = (int) getMips().getReg(base);
-        int offset = getRandom().randomDm(baseVal);
+        int offset = getRandom().randomDm(baseVal, rt);
         if (Math.abs(offset) >= 0x7fff) {
             return;
         }
         String codeStr = String.format("lw $%d, %d($%d)", rt, offset, base);
         getMips().putCodeStr(codeStr);
         getMips().putCode(translate(codeStr));
-        getRandom().updateHigh(rt);
+        getRandom().update(rt);
         getMips().check();
     }
 

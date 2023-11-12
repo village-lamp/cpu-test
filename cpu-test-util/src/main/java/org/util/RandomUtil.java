@@ -4,6 +4,7 @@ import org.constant.CommonConstant;
 import org.constant.RegConstant;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -25,7 +26,9 @@ public class RandomUtil implements RegConstant, CommonConstant {
     //前几条指令使用的寄存器
     private final int[] last;
     //dm中使用过的地址
-    private final ArrayList<Integer> dmValue;
+    private final HashMap<Integer, String> dmValue;
+    //中级寄存器生成ra的概率的倒数
+    private final int MID_RA_RATIO = 4;
 
     /**
      * @param seed 随机数种子
@@ -43,7 +46,7 @@ public class RandomUtil implements RegConstant, CommonConstant {
             lastLow[i] = randInt(LOW_REG_START, LOW_REG_END);
             last[i] = randInt(1, 30);
         }
-        dmValue = new ArrayList<>();
+        dmValue = new HashMap<>();
     }
 
     /**
@@ -52,7 +55,11 @@ public class RandomUtil implements RegConstant, CommonConstant {
      * @return 寄存器编号
      */
     public int randomReg(boolean isUse) {
-        last[COUNT_REGS_BEFORE] = randInt(1, 30);
+        if (isUse) {
+            last[COUNT_REGS_BEFORE] = randInt(1, 31);
+        } else {
+            last[COUNT_REGS_BEFORE] = randInt(1, 30);
+        }
         int index = (isUse) ? randInt(COUNT_REGS_BEFORE) : COUNT_REGS_BEFORE;
         return last[index];
     }
@@ -60,7 +67,7 @@ public class RandomUtil implements RegConstant, CommonConstant {
     /**
      * 随机寄存器
      * @param isUse 是否需要大概率为前几次使用过的寄存器
-     * @param reg 生成与reg相同类型的寄存器编号
+     * @param reg 生成比reg低级的寄存器编号
      * @return 寄存器编号
      */
     public int randomReg(boolean isUse, int reg) {
@@ -68,9 +75,12 @@ public class RandomUtil implements RegConstant, CommonConstant {
             case "low":
                 return randomLow(isUse);
             case "mid":
-                return randomMid(isUse);
+                int low = randomLow(isUse);
+                int mid = randomMid(isUse);
+                int choose = randInt(1);
+                return (choose == 1) ? mid : low;
             case "high":
-                return randomHigh(isUse);
+                return randomReg(isUse);
         }
         return 0;
     }
@@ -93,6 +103,11 @@ public class RandomUtil implements RegConstant, CommonConstant {
      */
     public int randomMid(boolean isUse) {
         lastMid[COUNT_REGS_BEFORE] = randInt(MID_REG_START, MID_REG_END);
+        //不写入值时，可以尝试使用31号寄存器
+        if (isUse) {
+            int isRa = randInt(1, MID_RA_RATIO);
+            lastMid[COUNT_REGS_BEFORE] = (isRa == 1) ? 31 : lastMid[COUNT_REGS_BEFORE];
+        }
         int index = (isUse) ? randInt(COUNT_REGS_BEFORE) : COUNT_REGS_BEFORE;
         return lastMid[index];
     }
@@ -116,8 +131,7 @@ public class RandomUtil implements RegConstant, CommonConstant {
         for (int i = 0; i < COUNT_REGS_BEFORE; ++i) {
             lastLow[i] = lastLow[i + 1];
         }
-        lastLow[COUNT_REGS_BEFORE] = useReg;
-        update(useReg);
+        lastLow[COUNT_REGS_BEFORE - 1] = useReg;
     }
 
     /**
@@ -128,8 +142,7 @@ public class RandomUtil implements RegConstant, CommonConstant {
         for (int i = 0; i < COUNT_REGS_BEFORE; ++i) {
             lastMid[i] = lastMid[i + 1];
         }
-        lastMid[COUNT_REGS_BEFORE] = useReg;
-        update(useReg);
+        lastMid[COUNT_REGS_BEFORE - 1] = useReg;
     }
 
     /**
@@ -140,8 +153,7 @@ public class RandomUtil implements RegConstant, CommonConstant {
         for (int i = 0; i < COUNT_REGS_BEFORE; ++i) {
             lastHigh[i] = lastHigh[i + 1];
         }
-        lastHigh[COUNT_REGS_BEFORE] = useReg;
-        update(useReg);
+        lastHigh[COUNT_REGS_BEFORE - 1] = useReg;
     }
 
     /**
@@ -152,21 +164,14 @@ public class RandomUtil implements RegConstant, CommonConstant {
         for (int i = 0; i < COUNT_REGS_BEFORE; ++i) {
             last[i] = last[i + 1];
         }
-        last[COUNT_REGS_BEFORE] = useReg;
-    }
-
-    /**
-     * 根据寄存器的类型更新取值
-     * @param reg 寄存器编号
-     */
-    public void updateByType(int reg) {
-        switch (getRegType(reg)) {
+        last[COUNT_REGS_BEFORE - 1] = useReg;
+        switch (getRegType(useReg)) {
             case "low":
-                updateLow(reg);
+                updateLow(useReg);
             case "mid":
-                updateMid(reg);
+                updateMid(useReg);
             case "high":
-                updateHigh(reg);
+                updateHigh(useReg);
         }
     }
 
@@ -203,6 +208,8 @@ public class RandomUtil implements RegConstant, CommonConstant {
             return "mid";
         } else if (HIGH_REG_START <= reg && reg <= HIGH_REG_END) {
             return "high";
+        } else if (reg == 31) {
+            return "mid";
         }
         return "none";
     }
@@ -211,8 +218,8 @@ public class RandomUtil implements RegConstant, CommonConstant {
      * 记录dm中已用的位置
      * @param val 使用过的地址
      */
-    public void addValueToDm(int val) {
-        dmValue.add(val);
+    public void addValueToDm(int val, String type) {
+        dmValue.put(val, type);
     }
 
     /**
@@ -220,19 +227,22 @@ public class RandomUtil implements RegConstant, CommonConstant {
      * @param baseVal base寄存器的值
      * @return offset
      */
-    public int randomDm(int baseVal) {
-        if (dmValue.isEmpty()) {
+    public int randomDm(int baseVal, int reg) {
+        ArrayList<Integer> list = new ArrayList<>(dmValue.keySet());
+        if (list.isEmpty()) {
             return baseVal;
         }
-        int index = randInt(dmValue.size() - 1);
-        for (int i = index; i < dmValue.size(); ++i) {
-            if (Math.abs(dmValue.get(i) - baseVal) <= 0x7fff) {
-                return dmValue.get(i) - baseVal;
+        int index = randInt(list.size() - 1);
+        for (int i = index; i < list.size(); ++i) {
+            if (Math.abs(list.get(i) - baseVal) <= 0x7fff &&
+                    getRegType(reg).equals(dmValue.get(list.get(i)))) {
+                return list.get(i) - baseVal;
             }
         }
         for (int i = 0; i < index; ++i) {
-            if (Math.abs(dmValue.get(i) - baseVal) <= 0x7fff) {
-                return dmValue.get(i) - baseVal;
+            if (Math.abs(list.get(i) - baseVal) <= 0x7fff &&
+                    getRegType(reg).equals(dmValue.get(list.get(i)))) {
+                return list.get(i) - baseVal;
             }
         }
         return -baseVal;
@@ -273,5 +283,27 @@ public class RandomUtil implements RegConstant, CommonConstant {
      */
     public int getPc(int line) {
         return 4 * line + PC_BEGIN - 4;
+    }
+
+    /**
+     * 判断数值是否合法
+     * @param reg 寄存器
+     * @param data 数值
+     * @return 是否合法
+     */
+    public boolean isLegal(int reg, long data) {
+        switch (getRegType(reg)) {
+            case "high":
+                return true;
+            case "mid":
+                return (data >= -0x8000 && data <= 0x7fff);
+            case "low":
+                return (data <= 3 && data >= 0);
+        }
+        return false;
+    }
+
+    public HashMap<Integer, String> getDmValue() {
+        return dmValue;
     }
 }

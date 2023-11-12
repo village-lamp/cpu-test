@@ -26,21 +26,20 @@ public class SwGenerator extends Generator implements CommonConstant {
         do {
             base = getRandom().randomReg(true);
         } while ("high".equals(getRandom().getRegType(base)));
-        int rt = getRandom().randomHigh(true);
+        int rt = getRandom().randomReg(true);
         int baseVal = (int) getMips().getReg(base);
-        if (Math.max(0, -0x7fff + baseVal) > Math.min(DM_END, 0x7fff + baseVal)) {
+        if (Math.max(4, -0x7fff + baseVal) > Math.min(DM_END, 0x7fff + baseVal)) {
             return;
         }
 
         //随机地址
-        int addr = getRandom().randInt(Math.max(0, -0x7fff + baseVal),
+        int addr = getRandom().randInt(Math.max(4, -0x7fff + baseVal),
                 Math.min(DM_END, 0x7fff + baseVal)) & 0xfffffffc;
         int offset = addr - baseVal;
         String codeStr = String.format("sw $%d, %d($%d)", rt, offset, base);
         getMips().putCodeStr(codeStr);
         getMips().putCode(translate(codeStr));
-        getRandom().addValueToDm(addr);
-        getRandom().updateHigh(rt);
+        getRandom().addValueToDm(addr, getRandom().getRegType(rt));
         getMips().check();
     }
 
