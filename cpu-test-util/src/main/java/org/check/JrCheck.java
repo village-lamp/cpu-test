@@ -7,11 +7,11 @@ import org.util.Hex;
 public class JrCheck extends Check implements CommonConstant {
 
     @Override
-    public String generate(String code, Mips mips) {
+    public String check(String code, Mips mips) {
         Hex im = new Hex();
         im.set(code);
         int rs = getRs(im);
-        if (mips.getRegs()[rs] > PC_END) {
+        if (mips.getRegs()[rs] > PC_END || mips.getRegs()[rs] < PC_BEGIN) {
             return "null";
         }
         mips.setPc((int) mips.getRegs()[rs]);

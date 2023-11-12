@@ -15,7 +15,7 @@ public class OriGeneratorTest {
     @Test
     public void translate() {
         OriGenerator oriGenerator = new OriGenerator(new Mips(), new RandomUtil(12314L));
-        assertEquals("0011010000000001010100111111000000",
+        assertEquals("00110100000000010000010100111111",
                 oriGenerator.translate("ori $1, $0, 1343"));
     }
 }

@@ -3,6 +3,7 @@ package org;
 import org.check.Check;
 import org.check.CheckFactory;
 import org.constant.CommonConstant;
+import org.constant.RegConstant;
 import org.util.Hex;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 /**
  * mips类，模拟cpu行为
  */
-public class Mips implements CommonConstant, Cloneable {
+public class Mips implements CommonConstant, Cloneable, RegConstant {
 
     //寄存器堆
     private long[] regs;
@@ -53,6 +54,7 @@ public class Mips implements CommonConstant, Cloneable {
     /**
      * 运行cpu
      * @param pcEnd 当pc与pcEnd相等时停止，用于判定是否循环
+     * @param maxTimes 最大运行时间
      * @return 运行结果
      */
     public ArrayList<String> run(int pcEnd, int maxTimes) {
@@ -61,21 +63,27 @@ public class Mips implements CommonConstant, Cloneable {
         while (pc <= PC_END && pc != pcEnd) {
             ++times;
             String str = check();
+            //返回"null"代表运行错误
             if ("null".equals(str)) {
                 return null;
             }
             out.add(str);
-            if (maxTimes <= times && maxTimes != -1) {
+            if (maxTimes <= times) {
+                //此处赋值是为了满足beq生成的判定
+                for (int i = LOW_REG_START; i <= LOW_REG_END; ++i) {
+                    regs[i] = 0;
+                }
                 pc = pcEnd;
                 return null;
-            }
-            if (pc == 0xfff7) {
-                int j = 0;
             }
         }
         return out;
     }
 
+    /**
+     * 运行单条指令
+     * @return 运行结果
+     */
     public String check() {
         CheckFactory checkFactory = new CheckFactory();
         String line = code.get(pc);
@@ -83,7 +91,7 @@ public class Mips implements CommonConstant, Cloneable {
             return "null";
         }
         Check check = checkFactory.create(Check.analyse(line));
-        return check.generate(line, this);
+        return check.check(line, this);
     }
 
     public int getPc() {
@@ -98,53 +106,16 @@ public class Mips implements CommonConstant, Cloneable {
         pc += addVal;
     }
 
-    public void putCodeStr(String code) {
-        this.codeStr.put(pc, code);
+    public void setCode(HashMap<Integer, String> code) {
+        this.code = code;
     }
 
     public void putCode(String code) {
         this.code.put(pc, Hex.toHex(code).toString());
     }
 
-    public long getReg(int base) {
-        return (base == 0) ? 0 : regs[base];
-    }
-
-    public HashMap<Integer, Long> getDm() {
-        return dm;
-    }
-
-    public void setDm(HashMap<Integer, Long> dm) {
-        this.dm = dm;
-    }
-
-    public void setDm(int addr, long val) {
-        dm.put(addr, val);
-    }
-
-    public long[] getRegs() {
-        return regs;
-    }
-
-    public void setRegs(long[] regs) {
-        this.regs = regs;
-    }
-
-    public void setReg(int reg, long val) {
-        regs[reg] = val;
-    }
-
-    public String getBlock() {
-        return block;
-    }
-
-    public int getBlockPc() {
-        return blockPc;
-    }
-
-    public void setBlock(String type, int val) {
-        block = type;
-        blockPc = val;
+    public void putCodeStr(String code) {
+        this.codeStr.put(pc, code);
     }
 
     public HashMap<Integer, String> getCode() {
@@ -155,10 +126,47 @@ public class Mips implements CommonConstant, Cloneable {
         return codeStr;
     }
 
-    public void setCode(HashMap<Integer, String> code) {
-        this.code = code;
+    public void setReg(int reg, long val) {
+        regs[reg] = val;
     }
 
+    public void setRegs(long[] regs) {
+        this.regs = regs;
+    }
+
+    public long getReg(int base) {
+        return (base == 0) ? 0 : regs[base];
+    }
+
+    public long[] getRegs() {
+        return regs;
+    }
+
+    public void setDm(HashMap<Integer, Long> dm) {
+        this.dm = dm;
+    }
+
+    public HashMap<Integer, Long> getDm() {
+        return dm;
+    }
+
+    public void setBlock(String type, int val) {
+        block = type;
+        blockPc = val;
+    }
+
+    public String getBlock() {
+        return block;
+    }
+
+    public int getBlockPc() {
+        return blockPc;
+    }
+
+    /**
+     * 深克隆
+     * @return 克隆对象
+     */
     @Override
     public Mips clone() {
         try {
@@ -173,6 +181,13 @@ public class Mips implements CommonConstant, Cloneable {
         }
     }
 
+    /**
+     * 向寄存器堆中写值
+     * @param pc 当前pc值
+     * @param target 目标寄存器
+     * @param data 数值
+     * @return 输出结果
+     */
     public String writeToGrf(long pc, int target, long data) {
         if (target == 0) {
             return null;
@@ -182,6 +197,13 @@ public class Mips implements CommonConstant, Cloneable {
                 target, Hex.toHex(data));
     }
 
+    /**
+     * 向dm中写值
+     * @param pc 当前pc值
+     * @param addr 地址
+     * @param data 数值
+     * @return 输出结果
+     */
     public String writeToDm(long pc, int addr, long data) {
         dm.put(addr, data);
         return String.format("@%s: *%s <= %s\n", Hex.toHex(pc),

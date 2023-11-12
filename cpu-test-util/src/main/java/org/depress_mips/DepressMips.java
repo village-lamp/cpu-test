@@ -2,6 +2,9 @@ package org.depress_mips;
 
 import java.util.Scanner;
 
+/**
+ * 解压缩
+ */
 public class DepressMips {
     public static void main(String[] args) {
         if (args.length == 0) {

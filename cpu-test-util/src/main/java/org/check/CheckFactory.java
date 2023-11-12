@@ -1,5 +1,8 @@
 package org.check;
 
+/**
+ * check简单工厂类
+ */
 public class CheckFactory {
 
     public Check create(String type) {

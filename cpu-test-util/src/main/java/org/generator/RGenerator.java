@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
  * R类指令生成器
  * R类指令只使用高级寄存器
  */
-public class RGenerator extends Generator {
+public abstract class RGenerator extends Generator {
 
     private final String type;
 
@@ -43,15 +43,18 @@ public class RGenerator extends Generator {
         String str = "000000";
         Pattern pattern =Pattern.compile(".* \\$(\\d*), \\$(\\d*), \\$(\\d*)");
         Matcher matcher = pattern.matcher(codeStr);
-        matcher.find();
-        str += MipsCode.getReg(Integer.parseInt(matcher.group(2))) +
-                MipsCode.getReg(Integer.parseInt(matcher.group(3))) +
-                MipsCode.getReg(Integer.parseInt(matcher.group(1)));
-        if ("add".equals(type)) {
-            str += "00000100000";
-        } else {
-            str += "00000100010";
+        if (matcher.find()) {
+            str += MipsCode.getReg(Integer.parseInt(matcher.group(2))) +
+                    MipsCode.getReg(Integer.parseInt(matcher.group(3))) +
+                    MipsCode.getReg(Integer.parseInt(matcher.group(1)));
         }
+        str += getFunct();
         return str;
     }
+
+    /**
+     * 获取funct值
+     * @return “00000” + funct字符串
+     */
+    public abstract String getFunct();
 }

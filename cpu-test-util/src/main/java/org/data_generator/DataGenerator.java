@@ -3,9 +3,8 @@ package org.data_generator;
 import java.util.*;
 
 /**
- * 数据生成类
+ * 数据生成
  */
-
 public class DataGenerator {
 
     public static void main(String[] args) {

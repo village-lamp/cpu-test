@@ -33,10 +33,11 @@ public class LuiGenerator extends Generator {
         String str = "001111";
         Pattern pattern =Pattern.compile("lui \\$(\\d*), (\\d*)");
         Matcher matcher = pattern.matcher(codeStr);
-        matcher.find();
-        str += MipsCode.getReg(0) +
-                MipsCode.getReg(Integer.parseInt(matcher.group(1))) +
-                MipsCode.getImm16(Integer.parseInt(matcher.group(2)));
+        if (matcher.find()) {
+            str += MipsCode.getReg(0) +
+                    MipsCode.getReg(Integer.parseInt(matcher.group(1))) +
+                    MipsCode.getImm16(Integer.parseInt(matcher.group(2)));
+        }
         return str;
     }
 }

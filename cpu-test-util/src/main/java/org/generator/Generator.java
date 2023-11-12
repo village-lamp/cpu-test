@@ -10,7 +10,7 @@ public abstract class Generator {
 
     //mips
     private final Mips mips;
-    //随即工具
+    //随机工具
     private final RandomUtil random;
 
     public Generator(Mips mips, RandomUtil random) {
@@ -23,6 +23,11 @@ public abstract class Generator {
      */
     public abstract void generate();
 
+    /**
+     * 将指令翻译为二进制码
+     * @param codeStr 指令字符串
+     * @return 二进制码
+     */
     public abstract String translate(String codeStr);
 
     public Mips getMips() {

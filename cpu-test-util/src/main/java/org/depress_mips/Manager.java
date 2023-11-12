@@ -6,10 +6,18 @@ import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+/**
+ * 解压文件
+ */
 public class Manager {
 
+    //资源地址
     public static final String MIPS_PATH = "./resources/mips";
 
+    /**
+     * 工作方法
+     * @param args 压缩包地址
+     */
     public static void work(String[] args) {
         boolean ret;
         ret = clear();
@@ -34,18 +42,24 @@ public class Manager {
         }
     }
 
+    /**
+     * 清理资源文件夹
+     * @return 成功与否
+     */
     public static boolean clear() {
         File folder = new File(MIPS_PATH);
         File[] files = folder.listFiles();
         try {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    continue;
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        continue;
+                    }
+                    if (file.getName().equals("mips_tb.v")) {
+                        continue;
+                    }
+                    return file.delete();
                 }
-                if (file.getName().equals("mips_tb.v")) {
-                    continue;
-                }
-                file.delete();
             }
         } catch (Exception e) {
             return false;
@@ -53,6 +67,11 @@ public class Manager {
         return true;
     }
 
+    /**
+     * 解压缩
+     * @param zipPath 压缩包路径
+     * @return 成功与否
+     */
     public static boolean depress(String zipPath){
         byte[] buffer = new byte[1024];
         try (ZipInputStream zip = new ZipInputStream(Files.newInputStream(Paths.get(zipPath)))) {
@@ -62,11 +81,13 @@ public class Manager {
                     String name = entry.getName();
                     String[] str = name.split("/");
                     name = str[str.length - 1];
+                    //只提取.v
                     if (!name.matches(".*\\.v")) {
                         entry = zip.getNextEntry();
                         continue;
                     }
-                    if (entry.getName().equals("mips_tb.v")) {
+                    //不提取mips_tb.v
+                    if (name.equals("mips_tb.v")) {
                         entry = zip.getNextEntry();
                         continue;
                     }
@@ -88,18 +109,24 @@ public class Manager {
         return true;
     }
 
+    /**
+     * 重编文件，重写include
+     * @return 成功与否
+     */
     public static boolean run() {
         try {
             byte[] bytes = Files.readAllBytes(Paths.get("./resources/mips/mips.v"));
             try (FileOutputStream out = new FileOutputStream("./resources/mips/mips.v")) {
                 File folder = new File("./resources/mips");
                 File[] files = folder.listFiles();
-                for (File file : files) {
-                    if (!file.getName().equals("mips.v") &&
-                        !file.getName().equals("mips_tb.v") &&
-                        file.getName().matches(".*\\.v")) {
-                        String str = String.format("`include \"%s\"\n", file.getName());
-                        out.write(str.getBytes());
+                if (files != null) {
+                    for (File file : files) {
+                        if (!file.getName().equals("mips.v") &&
+                            !file.getName().equals("mips_tb.v") &&
+                            file.getName().matches(".*\\.v")) {
+                            String str = String.format("`include \"%s\"\n", file.getName());
+                            out.write(str.getBytes());
+                        }
                     }
                 }
                 out.write(bytes);

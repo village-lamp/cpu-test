@@ -3,10 +3,14 @@ package org.check;
 import org.Mips;
 import org.util.Hex;
 
+/**
+ * jal验证类
+ */
 public class JalCheck extends Check {
 
     @Override
-    public String generate(String code, Mips mips) {
+    public String check(String code, Mips mips) {
+        //31号寄存器值改变，jal空块应变成beq空块
         if ("jal".equals(mips.getBlock())) {
             mips.setBlock("beq", mips.getBlockPc());
         }

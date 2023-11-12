@@ -11,4 +11,9 @@ public class AddGenerator extends RGenerator {
     public AddGenerator(Mips mips, RandomUtil random) {
         super(mips, random, "add");
     }
+
+    @Override
+    public String getFunct() {
+        return "00000100000";
+    }
 }

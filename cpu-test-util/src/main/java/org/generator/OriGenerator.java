@@ -41,10 +41,11 @@ public class OriGenerator extends Generator {
         String str = "001101";
         Pattern pattern =Pattern.compile("ori \\$(\\d*), \\$(\\d*), (\\d*)");
         Matcher matcher = pattern.matcher(codeStr);
-        matcher.find();
-        str += MipsCode.getReg(Integer.parseInt(matcher.group(2))) +
-                MipsCode.getReg(Integer.parseInt(matcher.group(1))) +
-                MipsCode.getImm16(Integer.parseInt(matcher.group(3)));
+        if (matcher.find()) {
+            str += MipsCode.getReg(Integer.parseInt(matcher.group(2))) +
+                    MipsCode.getReg(Integer.parseInt(matcher.group(1))) +
+                    MipsCode.getImm16(Integer.parseInt(matcher.group(3)));
+        }
         return str;
     }
 }

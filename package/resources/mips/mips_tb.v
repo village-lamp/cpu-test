@@ -4,10 +4,10 @@
 // Company: 
 // Engineer:
 //
-// Create Date:   19:01:51 10/31/2023
+// Create Date:   19:57:40 11/07/2023
 // Design Name:   mips
-// Module Name:   /media/shared/share/ise/P4/mips/mips_tb.v
-// Project Name:  mips
+// Module Name:   /media/shared/share/ise/P5/mips_tb.v
+// Project Name:  P5
 // Target Device:  
 // Tool versions:  
 // Description: 
@@ -21,7 +21,10 @@
 // Additional Comments:
 // 
 ////////////////////////////////////////////////////////////////////////////////
+
+
 `include "mips.v"
+
 module mips_tb;
 
 	// Inputs
@@ -35,15 +38,20 @@ module mips_tb;
 	);
 
 	initial begin
+		// Initialize Inputs
 		clk = 0;
 		reset = 1;
-		#10
-		reset = 0;
-		#20000
+
+		// Wait 100 ns for global reset to finish
+		#10;
+      reset = 0;
+		// Add stimulus here
+		#40000
 		$finish;
+
 	end
-      
+	
 	always #1 clk = ~clk;
-		
+      
 endmodule
 

@@ -4,10 +4,13 @@ import org.Mips;
 import org.util.Hex;
 import org.util.UnsignedInt;
 
+/**
+ * lui验证类
+ */
 public class LuiCheck extends Check {
 
     @Override
-    public String generate(String code, Mips mips) {
+    public String check(String code, Mips mips) {
         Hex im = new Hex();
         im.set(code);
         int rt = getRt(im);

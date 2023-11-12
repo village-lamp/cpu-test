@@ -4,12 +4,13 @@ import org.Mips;
 import org.constant.CommonConstant;
 import org.util.Hex;
 
-import java.util.HashMap;
-
+/**
+ * lw验证类
+ */
 public class LwCheck extends Check implements CommonConstant {
 
     @Override
-    public String generate(String code, Mips mips) {
+    public String check(String code, Mips mips) {
         Hex im = new Hex();
         im.set(code);
         int base = getRs(im);
@@ -17,7 +18,7 @@ public class LwCheck extends Check implements CommonConstant {
         int offset = getImm16(im);
         long[] regs = mips.getRegs();
         long addr = regs[base] + offset;
-        addr = addr % 0x10000L;
+        //地址错误
         if (addr % 4 != 0 || addr < 0 || addr > DM_END) {
             return "null";
         }

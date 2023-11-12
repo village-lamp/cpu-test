@@ -21,6 +21,7 @@ public class LwGenerator extends Generator {
     @Override
     public void generate() {
         int base;
+        //获取低中级寄存器
         do {
             base = getRandom().randomReg(true);
         } while ("high".equals(getRandom().getRegType(base)));
@@ -42,10 +43,11 @@ public class LwGenerator extends Generator {
         String str = "100011";
         Pattern pattern =Pattern.compile("lw \\$(\\d*), ([-\\d]*)\\(\\$(\\d*)\\)");
         Matcher matcher = pattern.matcher(codeStr);
-        matcher.find();
-        str += MipsCode.getReg(Integer.parseInt(matcher.group(3))) +
-                MipsCode.getReg(Integer.parseInt(matcher.group(1))) +
-                MipsCode.getImm16(Integer.parseInt(matcher.group(2)));
+        if (matcher.find()) {
+            str += MipsCode.getReg(Integer.parseInt(matcher.group(3))) +
+                    MipsCode.getReg(Integer.parseInt(matcher.group(1))) +
+                    MipsCode.getImm16(Integer.parseInt(matcher.group(2)));
+        }
         return str;
     }
 }

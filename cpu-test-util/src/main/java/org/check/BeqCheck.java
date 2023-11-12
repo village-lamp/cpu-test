@@ -3,10 +3,13 @@ package org.check;
 import org.Mips;
 import org.util.Hex;
 
+/**
+ * beq验证类
+ */
 public class BeqCheck extends Check {
 
     @Override
-    public String generate(String code, Mips mips) {
+    public String check(String code, Mips mips) {
         Hex im = new Hex();
         im.set(code);
         int rs = getRs(im);

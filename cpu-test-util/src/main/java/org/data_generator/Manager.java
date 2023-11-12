@@ -5,7 +5,6 @@ import org.constant.CommonConstant;
 import org.Mips;
 import org.constant.RegConstant;
 import org.generator.*;
-import org.omg.CORBA.CODESET_INCOMPATIBLE;
 import org.util.RandomUtil;
 import org.util.UnsignedInt;
 
@@ -13,13 +12,15 @@ import java.io.*;
 import java.util.*;
 
 /**
- * 数据生成管理类
+ * 数据生成
  */
-
 public class Manager implements CommonConstant, RegConstant {
+
     //生成器列表
     private static final ArrayList<Generator> generators = new ArrayList<>();
+    //mips
     private static Mips mips;
+    //随机工具
     private static RandomUtil randomUtil;
 
     /**
@@ -38,6 +39,7 @@ public class Manager implements CommonConstant, RegConstant {
      */
     public static void generate() {
         while (mips.getPc() <= PC_END) {
+            //空块判定
             if (mips.getBlock() != null) {
                 if (mips.getCodeStr().get(mips.getPc() + 8) != null) {
                     if ("beq".equals(mips.getBlock())) {
@@ -61,10 +63,9 @@ public class Manager implements CommonConstant, RegConstant {
                     continue;
                 }
             }
+
+            //随机指令
             int op = randomUtil.randInt(generators.size() - 1);
-            if (mips.getPc() == 0x38f8) {
-                int j = 0;
-            }
             generators.get(op).generate();
         }
     }
@@ -98,37 +99,46 @@ public class Manager implements CommonConstant, RegConstant {
         }
     }
 
-    //打印代码
+    /**
+     * 打印代码
+     * @param path 存放路径
+     */
     public static void print(String path) {
+        //统计没有运行到的指令的数量
         int nopCount = 0;
         try (FileOutputStream asm = new FileOutputStream(path + "\\test.asm")) {
-            try (FileOutputStream txt = new FileOutputStream(path + "\\test.txt")) {
+            try (FileOutputStream txt = new FileOutputStream(path + "\\code.txt")) {
                 for (int i = PC_BEGIN; i <= PC_END; i += 4) {
                     String str = mips.getCodeStr().get(i);
                     String strTxt = mips.getCode().get(i) + '\n';
+                    //无指令，则输出nop
                     if (str == null) {
                         str = "nop";
                         strTxt = "00000000\n";
                         ++nopCount;
                     }
+                    //每行前加上line
                     str = String.format("line%d: ", randomUtil.getLine(i)) + str + "\r\n";
                     asm.write(str.getBytes());
                     txt.write(strTxt.getBytes());
                 }
             }
         } catch (Exception e) {
-            System.out.println("写入test.asm失败");
+            System.out.println("写入失败");
             return;
         }
-        System.out.println("生成test.asm成功");
+        System.out.println("生成成功");
         double cover = 1 - ((nopCount << 2) / (double) (PC_END - PC_BEGIN));
         System.out.println("指令生成率:" + cover);
     }
 
+    /**
+     * 初始化
+     */
     public static void init() {
         Random random = new Random();
         long seed = random.nextLong();
-        //long seed = -8147529146551728134L;
+//        long seed = 296190157773772767L;
         System.out.printf("开始生成数据，种子为%d\n", seed);
         mips = new Mips();
         randomUtil = new RandomUtil(seed);

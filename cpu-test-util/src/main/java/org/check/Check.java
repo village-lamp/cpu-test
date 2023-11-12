@@ -3,10 +3,24 @@ package org.check;
 import org.Mips;
 import org.util.Hex;
 
+/**
+ * 验证抽象类
+ */
 public abstract class Check {
 
-    public abstract String generate(String code, Mips mips);
+    /**
+     * 验证
+     * @param code 十六进制代码
+     * @param mips mips
+     * @return 输出
+     */
+    public abstract String check(String code, Mips mips);
 
+    /**
+     * 分析代码种类
+     * @param code 十六进制代码
+     * @return 指令种类
+     */
     public static String analyse(String code) {
         String type;
         Hex im = new Hex();
@@ -56,6 +70,7 @@ public abstract class Check {
         return type;
     }
 
+    //分线
     public static int getRs(Hex im) {
         return im.toDec(21, 25);
     }

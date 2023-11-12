@@ -1,6 +1,5 @@
 package org.util;
 
-import org.Mips;
 import org.constant.CommonConstant;
 import org.constant.RegConstant;
 
@@ -19,11 +18,18 @@ public class RandomUtil implements RegConstant, CommonConstant {
     private final Random random;
     //前几条指令使用的高级寄存器
     private final int[] lastHigh;
+    //前几条指令使用的中级寄存器
     private final int[] lastMid;
+    //前几条指令使用的低级寄存器
     private final int[] lastLow;
+    //前几条指令使用的寄存器
     private final int[] last;
+    //dm中使用过的地址
     private final ArrayList<Integer> dmValue;
 
+    /**
+     * @param seed 随机数种子
+     */
     public RandomUtil(long seed) {
         random = new Random();
         random.setSeed(seed);
