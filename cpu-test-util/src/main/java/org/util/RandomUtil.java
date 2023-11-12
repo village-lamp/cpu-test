@@ -56,9 +56,9 @@ public class RandomUtil implements RegConstant, CommonConstant {
      */
     public int randomReg(boolean isUse) {
         if (isUse) {
-            last[COUNT_REGS_BEFORE] = randInt(1, 31);
+            last[COUNT_REGS_BEFORE] = randInt(0, 31);
         } else {
-            last[COUNT_REGS_BEFORE] = randInt(1, 30);
+            last[COUNT_REGS_BEFORE] = randInt(0, 30);
         }
         int index = (isUse) ? randInt(COUNT_REGS_BEFORE) : COUNT_REGS_BEFORE;
         return last[index];

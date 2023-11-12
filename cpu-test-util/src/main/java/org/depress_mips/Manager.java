@@ -50,18 +50,14 @@ public class Manager {
         File folder = new File(MIPS_PATH);
         File[] files = folder.listFiles();
         try {
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isDirectory()) {
-                        continue;
-                    }
-                    if (file.getName().equals("mips_tb.v")) {
-                        continue;
-                    }
-                    return file.delete();
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    continue;
                 }
-            } else {
-                return false;
+                if (file.getName().equals("mips_tb.v")) {
+                    continue;
+                }
+                return file.delete();
             }
         } catch (Exception e) {
             return false;

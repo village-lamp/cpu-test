@@ -84,7 +84,7 @@ public class Manager implements CommonConstant, RegConstant {
             mips.addPc(4);
         }
         //初始化高级寄存器
-        for (int i = HIGH_REG_START; i <= HIGH_REG_END; ++i) {
+        for (int i = HIGH_REG_START + 1; i <= HIGH_REG_END; ++i) {
             int hi = randomUtil.randomUnsignedImm();
             int lo = randomUtil.randomUnsignedImm();
             String codeStr = String.format("lui $%d, %d", i, hi);
