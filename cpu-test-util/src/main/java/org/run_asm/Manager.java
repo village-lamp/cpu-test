@@ -39,7 +39,7 @@ public class Manager {
         mips.setCode(code);
 
         //运行mips
-        File out = new File(path + "\\out.txt");
+        File out = new File(path + "\\stdout.txt");
         ArrayList<String> outs = mips.run(0, 200000);
 
         //写入out.txt

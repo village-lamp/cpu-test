@@ -184,6 +184,14 @@ public class RandomUtil implements RegConstant, CommonConstant {
     }
 
     /**
+     * 随机有符号立即数
+     * @return 有符号立即数
+     */
+    public int randomSignedImm() {
+        return randInt(-0x8000, 0x7fff);
+    }
+
+    /**
      * 随机无符号立即数
      * @param reg 寄存器编号
      * @return 寄存器对应的无符号立即数
@@ -193,6 +201,14 @@ public class RandomUtil implements RegConstant, CommonConstant {
             return randInt(3);
         } else {
             return randomUnsignedImm();
+        }
+    }
+
+    public int randomSignedImm(int reg) {
+        if ("low".equals(getRegType(reg))) {
+            return randInt(3);
+        } else {
+            return randomSignedImm();
         }
     }
 

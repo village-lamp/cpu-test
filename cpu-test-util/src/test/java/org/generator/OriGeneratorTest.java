@@ -1,6 +1,7 @@
 package org.generator;
 
 import org.Mips;
+import org.generator.cal_ri_generator.OriGenerator;
 import org.junit.Test;
 import org.util.RandomUtil;
 

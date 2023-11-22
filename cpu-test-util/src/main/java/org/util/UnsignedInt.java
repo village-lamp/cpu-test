@@ -25,4 +25,16 @@ public class UnsignedInt {
     public static long over(long val) {
         return (val + 0x100000000L) % 0x100000000L;
     }
+
+    /**
+     * 将无符号转为有符号
+     * @param val 无符号数
+     * @return 有符号数
+     */
+    public static long signed(long val) {
+        if ((val & 0x80000000L) != 0L) {
+            return -over(~val + 1);
+        }
+        return val;
+    }
 }

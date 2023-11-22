@@ -1,6 +1,6 @@
 package org;
 
-import org.check.Check;
+import org.check.Checker;
 import org.check.CheckFactory;
 import org.constant.CommonConstant;
 import org.constant.RegConstant;
@@ -14,7 +14,7 @@ import java.util.HashMap;
  */
 public class Mips implements CommonConstant, Cloneable, RegConstant {
 
-    //寄存器堆
+    //寄存器堆，0-31为通用寄存器，32为hi，33为lo
     private long[] regs;
     //当前pc值
     private int pc;
@@ -28,6 +28,8 @@ public class Mips implements CommonConstant, Cloneable, RegConstant {
     private String block;
     //空白块所属指令的下一条指令pc
     private int blockPc;
+    //运行出错标识
+    private boolean error;
 
     public Mips(long[] regs, int pc, HashMap<Integer, String> codeStr,
                 HashMap<Integer, Long> dm, HashMap<Integer, String> code) {
@@ -37,10 +39,11 @@ public class Mips implements CommonConstant, Cloneable, RegConstant {
         this.dm = dm;
         block = null;
         this.code = code;
+        error = false;
     }
 
     public Mips() {
-        this.regs = new long[32];
+        this.regs = new long[34];
         for (int i = 1; i <= 31; i++) {
             regs[i] = 0;
         }
@@ -49,6 +52,7 @@ public class Mips implements CommonConstant, Cloneable, RegConstant {
         this.dm = new HashMap<>();
         block = null;
         this.code = new HashMap<>();
+        error = false;
     }
 
     /**
@@ -61,20 +65,19 @@ public class Mips implements CommonConstant, Cloneable, RegConstant {
         ArrayList<String> out = new ArrayList<>();
         int times = 0;
         while (pc <= PC_END && pc != pcEnd) {
+            if (pc == 0x3198) {
+                int j = 0;
+            }
             ++times;
             String str = check();
             //返回"none"代表没有指令
             if ("none".equals(str)) {
-                return null;
+                return out;
             }
             out.add(str);
             //返回"null"代表运行错误
             if (maxTimes <= times || "null".equals(str)) {
-                //此处赋值是为了满足beq生成的判定
-                for (int i = LOW_REG_START; i <= LOW_REG_END; ++i) {
-                    regs[i] = 0;
-                }
-                pc = pcEnd;
+                error = true;
                 return null;
             }
         }
@@ -91,8 +94,8 @@ public class Mips implements CommonConstant, Cloneable, RegConstant {
         if (line == null) {
             return "none";
         }
-        Check check = checkFactory.create(Check.analyse(line));
-        return check.check(line, this);
+        Checker checker = checkFactory.create(Checker.analyse(line));
+        return checker.check(line, this);
     }
 
     public int getPc() {
@@ -173,8 +176,8 @@ public class Mips implements CommonConstant, Cloneable, RegConstant {
         try {
             Mips clone = (Mips) super.clone();
             clone.setDm(new HashMap<>(dm));
-            long[] nRegs = new long[32];
-            System.arraycopy(regs, 0, nRegs, 0, 32);
+            long[] nRegs = new long[34];
+            System.arraycopy(regs, 0, nRegs, 0, 34);
             clone.setRegs(nRegs);
             return clone;
         } catch (Exception e) {
@@ -209,5 +212,9 @@ public class Mips implements CommonConstant, Cloneable, RegConstant {
         dm.put(addr, data);
         return String.format("@%s: *%s <= %s\n", Hex.toHex(pc),
                 Hex.toHex(addr), Hex.toHex(data));
+    }
+
+    public boolean isError() {
+        return error;
     }
 }
