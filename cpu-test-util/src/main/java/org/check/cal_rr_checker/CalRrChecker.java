@@ -18,14 +18,20 @@ public abstract class CalRrChecker extends Checker {
         int rt = getRt(im);
         int rd = getRd(im);
         long[] regs = mips.getRegs();
-        long data = UnsignedInt.over(calc(regs[rs], regs[rt]));
+        Long data = calc(regs[rs], regs[rt]);
+        if (data == null) {
+            if (mips.isGenerate()) {
+                return "none";
+            }
+            data = 0L;
+        }
         mips.addPc(4);
-        return mips.writeToGrf(mips.getPc() - 4, rd, data);
+        return mips.writeToGrf(mips.getPc() - 4, rd, UnsignedInt.over(data));
     }
 
     /**
      * 计算指令结果
      * @return 结果
      */
-    public abstract long calc(long rsVal, long rtVal);
+    public abstract Long calc(long rsVal, long rtVal);
 }

@@ -57,7 +57,7 @@ public class Manager implements CommonConstant {
             pos = getNextOut(out, pos);
             //排除循环到7000的情况
             if (pos < out.size() && !out.get(pos).matches(".*@00007000: .*")) {
-                System.out.printf("行数多于标准答案，期望输出为空，实际输出为%s\n", out.get(pos));
+                System.out.printf("行数多于标准答案，期望输出为空，实际输出为%s\n", deleteTime(out.get(pos)));
                 return;
             }
             System.out.println("答案正确");

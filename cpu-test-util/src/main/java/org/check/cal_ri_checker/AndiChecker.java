@@ -6,7 +6,11 @@ package org.check.cal_ri_checker;
 public class AndiChecker extends CalRiChecker {
 
     @Override
-    public long calc(long rsVal, long imm) {
-        return rsVal & imm;
+    public Long calc(long rsVal, long imm) {
+        long data = rsVal & imm;
+        if (data == 0L) {
+            return null;
+        }
+        return data;
     }
 }

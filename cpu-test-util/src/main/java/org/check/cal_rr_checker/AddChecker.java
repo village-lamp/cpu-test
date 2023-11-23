@@ -6,7 +6,7 @@ package org.check.cal_rr_checker;
 public class AddChecker extends CalRrChecker {
 
     @Override
-    public long calc(long rsVal, long rtVal) {
+    public Long calc(long rsVal, long rtVal) {
         return rsVal + rtVal;
     }
 }

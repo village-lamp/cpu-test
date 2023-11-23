@@ -47,6 +47,10 @@ public class Manager implements CommonConstant, RegConstant {
     private static RandomUtil randomUtil;
     //种子
     private static long seed;
+    //指令生成权重
+    private static final ArrayList<Integer> weights = new ArrayList<>();
+    //指令生成总权重
+    private static int totalWeight;
 
     /**
      * 生成指令
@@ -93,9 +97,18 @@ public class Manager implements CommonConstant, RegConstant {
                 int j = 0;
             }
 
-            //随机指令
-            int op = randomUtil.randInt(generators.size() - 1);
-            generators.get(op).generate();
+            //随机生成指令
+            int op = 0;
+            int sum = 0;
+            int rand = randomUtil.randInt(1, totalWeight);
+            for (int weight : weights) {
+                sum += weight;
+                if (rand <= sum) {
+                    generators.get(op).generate();
+                    break;
+                }
+                ++op;
+            }
         }
     }
 
@@ -169,34 +182,67 @@ public class Manager implements CommonConstant, RegConstant {
         seed = random.nextLong();
 //        seed = -5906435837150503271L;
         mips = new Mips();
+        mips.setGenerate(true);
         randomUtil = new RandomUtil(seed);
         generators.add(new AddGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new SubGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new OriGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new LwGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new SwGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new BeqGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new LuiGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new JalGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new JrGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new OrGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new AndGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new SltGenerator(mips, randomUtil));
+        weights.add(1);
         generators.add(new SltuGenerator(mips, randomUtil));
+        weights.add(1);
         generators.add(new AndiGenerator(mips, randomUtil));
+        weights.add(5);
         generators.add(new AddiGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new ShGenerator(mips, randomUtil));
+        weights.add(5);
         generators.add(new SbGenerator(mips, randomUtil));
+        weights.add(3);
         generators.add(new LhGenerator(mips, randomUtil));
+        weights.add(5);
         generators.add(new LbGenerator(mips, randomUtil));
+        weights.add(3);
         generators.add(new BneGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new MultGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new MultuGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new DivGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new DivuGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new MfhiGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new MfloGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new MthiGenerator(mips, randomUtil));
+        weights.add(10);
         generators.add(new MtloGenerator(mips, randomUtil));
+        weights.add(10);
+        totalWeight = 0;
+        for (int weight : weights) {
+           totalWeight += weight;
+        }
     }
 }

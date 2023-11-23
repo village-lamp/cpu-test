@@ -32,6 +32,10 @@ public abstract class StoreChecker extends Checker implements CommonConstant {
             data = 0L;
         }
         data = storeData(data, regs[rt], addr);
+        if (data == 0L && mips.isGenerate()) {
+            mips.addPc(-4);
+            return "none";
+        }
         return mips.writeToDm((mips.getPc() - 4), (int) addr & 0xfffffffc, data);
     }
 

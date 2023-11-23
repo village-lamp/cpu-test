@@ -8,7 +8,7 @@ import org.util.UnsignedInt;
 public class SltChecker extends CalRrChecker {
 
     @Override
-    public long calc(long rsVal, long rtVal) {
+    public Long calc(long rsVal, long rtVal) {
         long rsValue = UnsignedInt.signed(rsVal);
         long rtValue = UnsignedInt.signed(rtVal);
         if (rsValue < rtValue) {

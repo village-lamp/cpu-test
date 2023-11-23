@@ -6,7 +6,7 @@ package org.check.cal_ri_checker;
 public class AddiChecker extends CalRiChecker {
 
     @Override
-    public long calc(long rsVal, long imm) {
+    public Long calc(long rsVal, long imm) {
         if ((imm & 0x8000) != 0) {
             imm = (~imm + 1) & 0xffff;
             imm = -imm;

@@ -26,11 +26,7 @@ public abstract class CalRrGenerator extends Generator {
         //生成寄存器，rs和rt都需要构造冒险
         int rd = getRandom().randomReg(false);
         int rs = getRandom().randomReg(true, rd);
-        int rt;
-        //rs与rt不相同
-        do {
-            rt = getRandom().randomReg(true, rd);
-        } while(rt == rs);
+        int rt = getRandom().randomReg(true, rd);
         if (!getRandom().isLegal(rd, calc(rs, rt))) {
             return;
         }

@@ -32,6 +32,10 @@ public abstract class LoadChecker extends Checker implements CommonConstant {
             data = 0L;
         }
         data = loadData(data, addr);
+        if (data == 0L && mips.isGenerate()) {
+            mips.addPc(-4);
+            return "none";
+        }
         return mips.writeToGrf(mips.getPc() - 4, rt, data);
     }
 

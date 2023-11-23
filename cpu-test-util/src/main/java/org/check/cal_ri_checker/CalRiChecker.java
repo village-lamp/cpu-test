@@ -18,14 +18,20 @@ public abstract class CalRiChecker extends Checker {
         int rt = getRt(im);
         int imm = getImm16(im);
         long[] regs = mips.getRegs();
-        long data = UnsignedInt.over(calc(regs[rs], imm));
+        Long data = calc(regs[rs], imm);
+        if (data == null) {
+            if (mips.isGenerate()) {
+                return "none";
+            }
+            data = 0L;
+        }
         mips.addPc(4);
-        return mips.writeToGrf(mips.getPc() - 4, rt, data);
+        return mips.writeToGrf(mips.getPc() - 4, rt, UnsignedInt.over(data));
     }
 
     /**
      * 计算指令结果
      * @return 结果
      */
-    public abstract long calc(long rsVal, long imm);
+    public abstract Long calc(long rsVal, long imm);
 }

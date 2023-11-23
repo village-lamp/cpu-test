@@ -30,6 +30,8 @@ public class Mips implements CommonConstant, Cloneable, RegConstant {
     private int blockPc;
     //运行出错标识
     private boolean error;
+    //是否是生成时使用的mips
+    private boolean generate;
 
     public Mips(long[] regs, int pc, HashMap<Integer, String> codeStr,
                 HashMap<Integer, Long> dm, HashMap<Integer, String> code) {
@@ -40,6 +42,7 @@ public class Mips implements CommonConstant, Cloneable, RegConstant {
         block = null;
         this.code = code;
         error = false;
+        generate = false;
     }
 
     public Mips() {
@@ -53,6 +56,7 @@ public class Mips implements CommonConstant, Cloneable, RegConstant {
         block = null;
         this.code = new HashMap<>();
         error = false;
+        generate = false;
     }
 
     /**
@@ -216,5 +220,13 @@ public class Mips implements CommonConstant, Cloneable, RegConstant {
 
     public boolean isError() {
         return error;
+    }
+
+    public boolean isGenerate() {
+        return generate;
+    }
+
+    public void setGenerate(boolean flag) {
+        generate = flag;
     }
 }

@@ -61,7 +61,7 @@ def check():
     for file in os.listdir(path):
         if auto == 'y' and not re.match('test\\d+', file):
             continue
-        print('*************')
+        print('\n*************')
         print(file)
         sub_path = os.path.join(path, file)
         if os.path.exists(code_txt):

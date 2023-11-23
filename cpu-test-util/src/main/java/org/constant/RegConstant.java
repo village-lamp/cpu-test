@@ -6,7 +6,7 @@ package org.constant;
 public interface RegConstant {
 
     //高级寄存器起始
-    int HIGH_REG_START = 0;
+    int HIGH_REG_START = 1;
 
     //高级寄存器截止
     int HIGH_REG_END = 15;
