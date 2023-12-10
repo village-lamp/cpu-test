@@ -23,6 +23,10 @@ public abstract class MulDivGenerator extends Generator {
 
     @Override
     public void generate() {
+        if (getMips().isDelaySlot()) {
+            return;
+        }
+
         int rs = getRandom().randomReg(true);
         int rt = getRandom().randomReg(true);
         String codeStr = String.format("%s $%d, $%d", type, rs, rt);
