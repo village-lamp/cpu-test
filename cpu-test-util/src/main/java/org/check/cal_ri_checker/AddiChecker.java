@@ -1,5 +1,7 @@
 package org.check.cal_ri_checker;
 
+import org.util.UnsignedInt;
+
 /**
  * addi验证类
  */
@@ -11,6 +13,6 @@ public class AddiChecker extends CalRiChecker {
             imm = (~imm + 1) & 0xffff;
             imm = -imm;
         }
-        return rsVal + imm;
+        return UnsignedInt.extend(rsVal) + UnsignedInt.extend(imm);
     }
 }

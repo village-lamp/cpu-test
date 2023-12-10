@@ -1,6 +1,6 @@
 package org.generator.cal_rr_generator;
 
-import org.Mips;
+import org.mips.Mips;
 import org.generator.Generator;
 import org.util.MipsCode;
 import org.util.RandomUtil;
@@ -35,6 +35,10 @@ public abstract class CalRrGenerator extends Generator {
         String codeStr = String.format("%s $%d, $%d, $%d", type, rd, rs, rt);
         getMips().putCodeStr(codeStr);
         getMips().putCode(translate(codeStr));
+        if (getMips().isDelaySlot()) {
+            getMips().setDelaySlot(false);
+            return;
+        }
         getMips().check();
     }
 

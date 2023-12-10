@@ -37,4 +37,25 @@ public class UnsignedInt {
         }
         return val;
     }
+
+    /**
+     * 计算是否溢出
+     * @param data 数据
+     * @return 是否溢出
+     */
+    public static boolean isOverFlow(Long data) {
+        return ((data >> 31) & 1) != ((data >> 32) & 1);
+    }
+
+    /**
+     * 有符号扩展到33位
+     * @param data 32位数据
+     * @return 33位数据
+     */
+    public static long extend(Long data) {
+        if (((data >> 31) & 1) == 1) {
+            return data | 0x100000000L;
+        }
+        return data;
+    }
 }

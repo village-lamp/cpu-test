@@ -1,6 +1,6 @@
 package org.generator.cal_rr_generator;
 
-import org.Mips;
+import org.mips.Mips;
 import org.util.RandomUtil;
 
 /**

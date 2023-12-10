@@ -1,6 +1,6 @@
 package org.generator.mv_fr_generator;
 
-import org.Mips;
+import org.mips.Mips;
 import org.generator.Generator;
 import org.util.MipsCode;
 import org.util.RandomUtil;
@@ -27,6 +27,10 @@ public abstract class MvFrGenerator extends Generator {
         String codeStr = String.format("%s $%d", type, rd);
         getMips().putCodeStr(codeStr);
         getMips().putCode(translate(codeStr));
+        if (getMips().isDelaySlot()) {
+            getMips().setDelaySlot(false);
+            return;
+        }
         getMips().check();
     }
 

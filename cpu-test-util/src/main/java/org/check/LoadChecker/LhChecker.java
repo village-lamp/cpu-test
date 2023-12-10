@@ -1,12 +1,14 @@
 package org.check.LoadChecker;
 
-import org.Mips;
+import org.mips.Mips;
 
 public class LhChecker extends LoadChecker {
 
     @Override
-    public boolean isAlign(long addr) {
-        return addr % 2 == 0;
+    public boolean isExc(long addr) {
+        String hit = Mips.hitHardware(addr);
+        return (addr % 2 != 0) || "none".equals(hit) ||
+                "TC0".equals(hit) || "TC1".equals(hit);
     }
 
     @Override

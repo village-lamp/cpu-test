@@ -47,6 +47,8 @@ public class RandomUtil implements RegConstant, CommonConstant {
             last[i] = randInt(1, 30);
         }
         dmValue = new HashMap<>();
+        dmValue.put(TC0_BEGIN + 4, "mid");
+        dmValue.put(TC1_BEGIN + 4, "mid");
     }
 
     /**
@@ -55,11 +57,13 @@ public class RandomUtil implements RegConstant, CommonConstant {
      * @return 寄存器编号
      */
     public int randomReg(boolean isUse) {
-        if (isUse) {
-            last[COUNT_REGS_BEFORE] = randInt(1, 31);
-        } else {
-            last[COUNT_REGS_BEFORE] = randInt(1, 30);
-        }
+        do {
+            if (isUse) {
+                last[COUNT_REGS_BEFORE] = randInt(1, 31);
+            } else {
+                last[COUNT_REGS_BEFORE] = randInt(1, 30);
+            }
+        } while("none".equals(getRegType(last[COUNT_REGS_BEFORE])));
         int index = (isUse) ? randInt(COUNT_REGS_BEFORE) : COUNT_REGS_BEFORE;
         return last[index];
     }
@@ -198,7 +202,7 @@ public class RandomUtil implements RegConstant, CommonConstant {
      */
     public int randomUnsignedImm(int reg) {
         if ("low".equals(getRegType(reg))) {
-            return randInt(3);
+            return randInt(1);
         } else {
             return randomUnsignedImm();
         }
@@ -314,12 +318,16 @@ public class RandomUtil implements RegConstant, CommonConstant {
             case "mid":
                 return (data >= -0x8000 && data <= 0x7fff);
             case "low":
-                return (data <= 3 && data >= 0);
+                return (data <= 1 && data >= 0);
         }
         return false;
     }
 
     public HashMap<Integer, String> getDmValue() {
         return dmValue;
+    }
+
+    public Random getRandom() {
+        return random;
     }
 }

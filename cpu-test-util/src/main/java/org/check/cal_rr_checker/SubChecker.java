@@ -1,8 +1,5 @@
 package org.check.cal_rr_checker;
 
-import org.Mips;
-import org.check.Checker;
-import org.util.Hex;
 import org.util.UnsignedInt;
 
 /**
@@ -12,10 +9,10 @@ public class SubChecker extends CalRrChecker {
 
     @Override
     public Long calc(long rsVal, long rtVal) {
-        long data = rsVal - rtVal;
+        long data = UnsignedInt.extend(rsVal) - UnsignedInt.extend(rtVal);
         if (data == 0L) {
             return null;
         }
-        return data;
+        return data & 0x1ffffffffL;
     }
 }

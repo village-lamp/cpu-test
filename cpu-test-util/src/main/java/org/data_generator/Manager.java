@@ -2,7 +2,12 @@
 package org.data_generator;
 
 import org.constant.CommonConstant;
-import org.Mips;
+import org.generator.mfc0_generator.Mfc0Generator;
+import org.generator.mtc0_generator.Mtc0Generator;
+import org.generator.ri_generator.RiGenerator;
+import org.generator.store_generator.StoreTcGenerator;
+import org.generator.syscall_generator.SyscallGenerator;
+import org.mips.Mips;
 import org.constant.RegConstant;
 import org.generator.*;
 import org.generator.br_r2_generator.BeqGenerator;
@@ -28,10 +33,14 @@ import org.generator.mv_to_generator.MtloGenerator;
 import org.generator.store_generator.SbGenerator;
 import org.generator.store_generator.ShGenerator;
 import org.generator.store_generator.SwGenerator;
+import org.util.Hex;
+import org.util.MipsCode;
 import org.util.RandomUtil;
 import org.util.UnsignedInt;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -58,9 +67,34 @@ public class Manager implements CommonConstant, RegConstant {
      */
     public static void work(String path) {
         init();
+        loadExcInt();
+        initCtrl();
         initReg();
+        generateInt();
         generate();
         print(path);
+    }
+
+    /**
+     * 生成初始配置
+     */
+    public static void initCtrl() {
+        int im = 0;
+        for (int i = 0; i <= 5; ++i) {
+            im |= randomUtil.randInt(0, 1) << i;
+        }
+        im |= 0b100;
+        long sr = 1 + ((long) im << 10);
+        int rt = randomUtil.randomMid(false);
+        String codeStr = String.format("ori $%d, $0, %d", rt, sr);
+        mips.putCodeStr(codeStr);
+        mips.putCode(generators.get(2).translate(codeStr));
+        mips.check();
+
+        codeStr = String.format("mtc0 $%d, $12", rt);
+        mips.putCodeStr(codeStr);
+        mips.putCode(generators.get(29).translate(codeStr));
+        mips.check();
     }
 
     /**
@@ -92,23 +126,54 @@ public class Manager implements CommonConstant, RegConstant {
                     continue;
                 }
             }
-
-            if (mips.getPc() == 0x3268) {
+            if (mips.getPc() == 0x38d0) {
                 int j = 0;
             }
+            generateSingle();
+        }
+    }
 
-            //随机生成指令
-            int op = 0;
-            int sum = 0;
-            int rand = randomUtil.randInt(1, totalWeight);
-            for (int weight : weights) {
-                sum += weight;
-                if (rand <= sum) {
-                    generators.get(op).generate();
-                    break;
-                }
-                ++op;
+    /**
+     * 生成单条指令
+     */
+    public static void generateSingle() {
+        int op = 0;
+        int sum = 0;
+        int rand = randomUtil.randInt(1, totalWeight);
+        for (int weight : weights) {
+            sum += weight;
+            if (rand <= sum) {
+                generators.get(op).generate();
+                break;
             }
+            ++op;
+        }
+    }
+
+    /**
+     * 生成延迟槽指令
+     */
+    public static void generateDelaySlot() {
+        mips.setDelaySlot(true);
+        mips.addPc(4);
+        do {
+            generateSingle();
+        } while(mips.isDelaySlot());
+        mips.addPc(-4);
+    }
+
+    /**
+     * 生成中断生成器中断
+     */
+    public static void generateInt() {
+        int begin = randomUtil.getLine(PC_BEGIN + 8);
+        int end = randomUtil.getLine(PC_END);
+        int d = end - begin;
+        d /= 10;
+        for (int i = begin; i <= end - d; i += d) {
+            int line = randomUtil.randInt(i, i + d - 1);
+            int pc = randomUtil.getPc(line);
+            mips.getInterrupts().add(pc);
         }
     }
 
@@ -142,6 +207,28 @@ public class Manager implements CommonConstant, RegConstant {
     }
 
     /**
+     * 加载异常处理程序
+     */
+    public static void loadExcInt() {
+        String path = "./resources";
+        try {
+            ArrayList<String> code = (ArrayList<String>)
+                    Files.readAllLines(Paths.get(path + "/code.txt"));
+            ArrayList<String> codeStr = (ArrayList<String>)
+                    Files.readAllLines(Paths.get(path + "/codeStr.asm"));
+            mips.setPc(EXC_INT_BEGIN);
+            for (int i = 0; i < code.size(); ++i) {
+                mips.getCode().put(mips.getPc(), code.get(i));
+                mips.putCodeStr(codeStr.get(i));
+                mips.addPc(4);
+            }
+        } catch (Exception e) {
+            System.out.println("加载异常处理程序失败");
+        }
+        mips.setPc(PC_BEGIN);
+    }
+
+    /**
      * 打印代码
      * @param path 存放路径
      */
@@ -164,6 +251,41 @@ public class Manager implements CommonConstant, RegConstant {
                     asm.write(str.getBytes());
                     txt.write(strTxt.getBytes());
                 }
+                for (int i = PC_END + 4; i < EXC_INT_BEGIN; i += 4) {
+                    String strTxt = "00000000\n";
+                    txt.write(strTxt.getBytes());
+                }
+                asm.write(".ktext 0x4180\n".getBytes());
+                int i = EXC_INT_BEGIN;
+                while (mips.getCodeStr().get(i) != null) {
+                    String str = mips.getCodeStr().get(i) + "\r\n";
+                    String strTxt = mips.getCode().get(i) + '\n';
+                    asm.write(str.getBytes());
+                    txt.write(strTxt.getBytes());
+                    i += 4;
+                }
+            }
+
+            try (FileOutputStream tb = new FileOutputStream(path + "\\mips_tb.v")) {
+                ArrayList<String> out = (ArrayList<String>)
+                        Files.readAllLines(Paths.get("./resources/mips_tb.v"));
+                int lines = 125;
+                for (int i = 0; i <= 9; ++i) {
+                    int pc = mips.getInterrupts().get(i);
+                    if ("nop".equals(mips.getCodeStr().get(pc)) || mips.isMulDiv(pc)) {
+                        pc = 0x10000;
+                    }
+                    out.add(lines, String.format("\t\t\tif (fixed_macroscopic_pc == 32'h%s) begin",
+                            Hex.toHex(pc)));
+                    lines++;
+                    out.add(lines, "\t\t\t\tinterrupt = 1;");
+                    lines++;
+                    out.add(lines, "\t\t\tend");
+                    lines++;
+                }
+                for (String str : out) {
+                    tb.write((str + '\n').getBytes());
+                }
             }
         } catch (Exception e) {
             System.out.println("写入失败");
@@ -180,66 +302,77 @@ public class Manager implements CommonConstant, RegConstant {
     public static void init() {
         Random random = new Random();
         seed = random.nextLong();
-//        seed = -5906435837150503271L;
+//        seed = 5002017596163405957L;
+//        System.out.println(seed);
         mips = new Mips();
         mips.setGenerate(true);
         randomUtil = new RandomUtil(seed);
-        generators.add(new AddGenerator(mips, randomUtil));
+        generators.add(new AddGenerator(mips, randomUtil)); //0
         weights.add(10);
-        generators.add(new SubGenerator(mips, randomUtil));
+        generators.add(new SubGenerator(mips, randomUtil)); //1
         weights.add(10);
-        generators.add(new OriGenerator(mips, randomUtil));
+        generators.add(new OriGenerator(mips, randomUtil)); //2
         weights.add(10);
-        generators.add(new LwGenerator(mips, randomUtil));
+        generators.add(new LwGenerator(mips, randomUtil)); //3
         weights.add(10);
-        generators.add(new SwGenerator(mips, randomUtil));
+        generators.add(new SwGenerator(mips, randomUtil)); //4
         weights.add(10);
-        generators.add(new BeqGenerator(mips, randomUtil));
+        generators.add(new BeqGenerator(mips, randomUtil)); //5
         weights.add(10);
-        generators.add(new LuiGenerator(mips, randomUtil));
+        generators.add(new LuiGenerator(mips, randomUtil)); //6
         weights.add(10);
-        generators.add(new JalGenerator(mips, randomUtil));
+        generators.add(new JalGenerator(mips, randomUtil)); //7
         weights.add(10);
-        generators.add(new JrGenerator(mips, randomUtil));
+        generators.add(new JrGenerator(mips, randomUtil)); //8
         weights.add(10);
-        generators.add(new OrGenerator(mips, randomUtil));
+        generators.add(new OrGenerator(mips, randomUtil)); //9
         weights.add(10);
-        generators.add(new AndGenerator(mips, randomUtil));
+        generators.add(new AndGenerator(mips, randomUtil)); //10
         weights.add(10);
-        generators.add(new SltGenerator(mips, randomUtil));
+        generators.add(new SltGenerator(mips, randomUtil)); //11
         weights.add(1);
-        generators.add(new SltuGenerator(mips, randomUtil));
+        generators.add(new SltuGenerator(mips, randomUtil)); //12
         weights.add(1);
-        generators.add(new AndiGenerator(mips, randomUtil));
+        generators.add(new AndiGenerator(mips, randomUtil)); //13
         weights.add(5);
-        generators.add(new AddiGenerator(mips, randomUtil));
+        generators.add(new AddiGenerator(mips, randomUtil)); //14
         weights.add(10);
-        generators.add(new ShGenerator(mips, randomUtil));
+        generators.add(new ShGenerator(mips, randomUtil)); //15
         weights.add(5);
-        generators.add(new SbGenerator(mips, randomUtil));
+        generators.add(new SbGenerator(mips, randomUtil)); //16
         weights.add(3);
-        generators.add(new LhGenerator(mips, randomUtil));
+        generators.add(new LhGenerator(mips, randomUtil)); //17
         weights.add(5);
-        generators.add(new LbGenerator(mips, randomUtil));
+        generators.add(new LbGenerator(mips, randomUtil)); //18
         weights.add(3);
-        generators.add(new BneGenerator(mips, randomUtil));
+        generators.add(new BneGenerator(mips, randomUtil)); //19
         weights.add(10);
-        generators.add(new MultGenerator(mips, randomUtil));
-        weights.add(10);
-        generators.add(new MultuGenerator(mips, randomUtil));
-        weights.add(10);
-        generators.add(new DivGenerator(mips, randomUtil));
-        weights.add(10);
-        generators.add(new DivuGenerator(mips, randomUtil));
-        weights.add(10);
-        generators.add(new MfhiGenerator(mips, randomUtil));
-        weights.add(10);
-        generators.add(new MfloGenerator(mips, randomUtil));
-        weights.add(10);
-        generators.add(new MthiGenerator(mips, randomUtil));
-        weights.add(10);
-        generators.add(new MtloGenerator(mips, randomUtil));
-        weights.add(10);
+        generators.add(new MultGenerator(mips, randomUtil)); //20
+        weights.add(3);
+        generators.add(new MultuGenerator(mips, randomUtil)); //21
+        weights.add(3);
+        generators.add(new DivGenerator(mips, randomUtil)); //22
+        weights.add(3);
+        generators.add(new DivuGenerator(mips, randomUtil)); //23
+        weights.add(3);
+        generators.add(new MfhiGenerator(mips, randomUtil)); //24
+        weights.add(3);
+        generators.add(new MfloGenerator(mips, randomUtil)); //25
+        weights.add(3);
+        generators.add(new MthiGenerator(mips, randomUtil)); //26
+        weights.add(3);
+        generators.add(new MtloGenerator(mips, randomUtil)); //27
+        weights.add(3);
+        generators.add(new Mfc0Generator(mips, randomUtil)); //28
+        weights.add(5);
+        generators.add(new Mtc0Generator(mips, randomUtil)); //29
+        weights.add(5);
+        generators.add(new SyscallGenerator(mips, randomUtil)); //30
+        weights.add(1);
+        generators.add(new RiGenerator(mips, randomUtil)); //31
+        weights.add(1);
+        generators.add(new StoreTcGenerator(mips, randomUtil)); //32
+        weights.add(2);
         totalWeight = 0;
         for (int weight : weights) {
            totalWeight += weight;

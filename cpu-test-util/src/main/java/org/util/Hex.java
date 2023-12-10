@@ -23,13 +23,13 @@ public class Hex {
         }
     }
 
-//    /**
-//     * 转为十进制
-//     * @return 对应的十进制数
-//     */
-//    public Integer toDec() {
-//        return toDec(0, (hex.length << 2) - 1);
-//    }
+    /**
+     * 转为十进制
+     * @return 对应的十进制数
+     */
+    public Integer toDec() {
+        return toDec(0, (hex.length << 2) - 1);
+    }
 
     /**
      * 截取出二进制的[l, r]，翻译为十进制
@@ -47,7 +47,7 @@ public class Hex {
         }
         //分别计算边界的值
         if (lBlock == rBlock) {
-            sum += toDec(hex[lBlock], l % 4, r % 4);
+            sum += toDec(hex[lBlock], 3 - l % 4, 3 - r % 4);
         }
         else {
             sum += toDec(hex[lBlock], 0, 3 - l % 4);
@@ -106,7 +106,8 @@ public class Hex {
     }
 
     /**
-     * ???不知道是干嘛的
+     * 将十六进制字符串转为Hex
+     * @param str 十六进制字符串
      */
     public void setSimple(String str) {
         byte[] bytes = str.getBytes();

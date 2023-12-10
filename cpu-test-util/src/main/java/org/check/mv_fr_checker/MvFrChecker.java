@@ -1,6 +1,6 @@
 package org.check.mv_fr_checker;
 
-import org.Mips;
+import org.mips.Mips;
 import org.check.Checker;
 import org.util.Hex;
 

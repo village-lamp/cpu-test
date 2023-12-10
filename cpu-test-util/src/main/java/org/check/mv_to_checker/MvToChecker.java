@@ -1,9 +1,8 @@
 package org.check.mv_to_checker;
 
-import org.Mips;
+import org.mips.Mips;
 import org.check.Checker;
 import org.util.Hex;
-import org.util.UnsignedInt;
 
 /**
  * mv_to类指令验证抽象类

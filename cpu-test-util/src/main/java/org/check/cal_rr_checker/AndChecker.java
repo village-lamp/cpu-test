@@ -1,5 +1,7 @@
 package org.check.cal_rr_checker;
 
+import org.util.UnsignedInt;
+
 /**
  * and验证类
  */
@@ -11,6 +13,6 @@ public class AndChecker extends CalRrChecker {
         if (data == 0L) {
             return null;
         }
-        return data;
+        return UnsignedInt.extend(data);
     }
 }

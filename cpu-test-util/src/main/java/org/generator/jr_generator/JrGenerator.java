@@ -1,6 +1,7 @@
 package org.generator.jr_generator;
 
-import org.Mips;
+import org.data_generator.Manager;
+import org.mips.Mips;
 import org.constant.CommonConstant;
 import org.constant.RegConstant;
 import org.generator.Generator;
@@ -24,13 +25,22 @@ public class JrGenerator extends Generator implements CommonConstant, RegConstan
         if (getMips().getBlock() != null) {
             return;
         }
+        //不能在延迟槽中生成
+        if (getMips().isDelaySlot()) {
+            return;
+        }
+        //不在计时槽中生成
+        if (getMips().getTc0().isStart() ||
+                getMips().getTc1().isStart()) {
+            return;
+        }
 
         //寻找可能跳转的中级寄存器
         int rs = MID_REG_START;
         for (; rs <= MID_REG_END; ++rs) {
             if (getMips().getReg(rs) % 4 == 0) {
                 int pc = (int) getMips().getReg(rs);
-                if (pc < PC_BEGIN || pc > getMips().getPc() + JUMP_MAX||
+                if (pc < PC_BEGIN + 8 || pc > getMips().getPc() + JUMP_MAX||
                 pc == getMips().getPc() + 4) continue;
 
                 //尝试执行
@@ -47,8 +57,7 @@ public class JrGenerator extends Generator implements CommonConstant, RegConstan
                             continue;
                         }
                         //写回状态
-                        getMips().setDm(testMips.getDm());
-                        getMips().setRegs(testMips.getRegs());
+                        getMips().cpy(testMips);
                         //如果停留的地方在指令的前面，则进入一个空块，将这个块声明为beq
                         if (testMips.getPc() < getMips().getPc()) {
                             getMips().setBlock("beq", getMips().getPc() + 8);
@@ -61,8 +70,8 @@ public class JrGenerator extends Generator implements CommonConstant, RegConstan
                 getMips().putCodeStr(codeStr);
                 getMips().putCode(translate(codeStr));
                 getMips().addPc(4);
+                getMips().getCode().put(getMips().getPc(), "00000000");
                 getMips().putCodeStr("nop");
-                getMips().putCode("00000000");
                 getMips().setPc(pc);
                 break;
             }

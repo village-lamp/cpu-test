@@ -1,6 +1,6 @@
 package org.check;
 
-import org.Mips;
+import org.mips.Mips;
 import org.util.Hex;
 
 import java.util.HashMap;
@@ -14,11 +14,14 @@ public abstract class Checker {
     public static HashMap<Integer, String> opcodeMap;
     //funct到指令的映射
     public static HashMap<Integer, String> functMap;
+    //rs到指令的映射
+    public static HashMap<Integer ,String> rsMap;
 
     //映射初始化
     static {
         opcodeMap = new HashMap<>();
         functMap = new HashMap<>();
+        rsMap = new HashMap<>();
         opcodeMap.put(0b000000, "R");
         opcodeMap.put(0b001101, "ori");
         opcodeMap.put(0b001000, "addi");
@@ -33,6 +36,7 @@ public abstract class Checker {
         opcodeMap.put(0b000101, "bne");
         opcodeMap.put(0b001111, "lui");
         opcodeMap.put(0b000011, "jal");
+        opcodeMap.put(0b010000, "COP0");
         functMap.put(0b100000, "add");
         functMap.put(0b100010, "sub");
         functMap.put(0b100100, "and");
@@ -48,7 +52,11 @@ public abstract class Checker {
         functMap.put(0b010000, "mfhi");
         functMap.put(0b010011, "mtlo");
         functMap.put(0b010001, "mthi");
+        functMap.put(0b001100, "syscall");
         functMap.put(0b000000, "nop");
+        rsMap.put(0b00000, "mfc0");
+        rsMap.put(0b00100, "mtc0");
+        rsMap.put(0b10000, "eret");
     }
 
     /**
@@ -70,9 +78,16 @@ public abstract class Checker {
         im.set(code);
         int opcode = getOpcode(im);
         int funct = getFunct(im);
+        int rs = getRs(im);
         type = opcodeMap.get(opcode);
         if ("R".equals(type)) {
             type = functMap.get(funct);
+        }
+        if ("COP0".equals(type)) {
+            type = rsMap.get(rs);
+        }
+        if (type == null) {
+            return "RI";
         }
         return type;
     }

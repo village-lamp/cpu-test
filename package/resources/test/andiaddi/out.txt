@@ -1,0 +1,7 @@
+WARNING: mips_tb.v:57: $readmemh(code.txt): Not enough words in the file for the requested range [0:4095].
+                  38@00003000: $ 9 <= 00003433
+                  42@00003004: $ 9 <= 00003000
+                  50@0000300c: $ 8 <= 00007fff
+                  54@00003010: $ 8 <= ffffffff
+                  58@00003014: $ 8 <= ffffef75
+mips_tb.v:66: $finish called at 200020000 (1ps)

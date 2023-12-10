@@ -19,7 +19,7 @@ def init():
     # 解压缩
     out_put = my_system_run('java -jar cpu-test-util.jar depress ' + zis)
     if re.search('失败', out_put) is not None:
-        exit(-1)
+       exit(-1)
     # 清理资源测试文件夹
     clear_tests()
 
@@ -58,6 +58,7 @@ def check():
     path = '.\\resources\\test'
     mips_path = '.\\resources\\mips'
     code_txt = mips_path + '\\code.txt'
+    tb = mips_path + '\\mips_tb.v'
     for file in os.listdir(path):
         if auto == 'y' and not re.match('test\\d+', file):
             continue
@@ -66,7 +67,10 @@ def check():
         sub_path = os.path.join(path, file)
         if os.path.exists(code_txt):
             os.remove(code_txt)
+        if os.path.exists(tb):
+            os.remove(tb)
         shutil.copy(sub_path + '\\code.txt', mips_path)
+        shutil.copy(sub_path + '\\mips_tb.v', tb)
         os.chdir('.\\resources\\mips')
         my_system_run('iverilog -o mips.vvp mips_tb.v')
         os.system('vvp mips.vvp > ..\\test\\' + file + '\\out.txt')

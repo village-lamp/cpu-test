@@ -1,6 +1,6 @@
 package org.check.jr_checker;
 
-import org.Mips;
+import org.mips.Mips;
 import org.check.Checker;
 import org.constant.CommonConstant;
 import org.util.Hex;

@@ -1,6 +1,6 @@
 package org.generator.mv_fr_generator;
 
-import org.Mips;
+import org.mips.Mips;
 import org.util.RandomUtil;
 
 public class MfloGenerator extends MvFrGenerator {

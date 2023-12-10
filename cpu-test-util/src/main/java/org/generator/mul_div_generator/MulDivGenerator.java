@@ -1,6 +1,6 @@
 package org.generator.mul_div_generator;
 
-import org.Mips;
+import org.mips.Mips;
 import org.generator.Generator;
 import org.util.MipsCode;
 import org.util.RandomUtil;
@@ -28,6 +28,10 @@ public abstract class MulDivGenerator extends Generator {
         String codeStr = String.format("%s $%d, $%d", type, rs, rt);
         getMips().putCodeStr(codeStr);
         getMips().putCode(translate(codeStr));
+        if (getMips().isDelaySlot()) {
+            getMips().setDelaySlot(false);
+            return;
+        }
         getMips().check();
     }
 

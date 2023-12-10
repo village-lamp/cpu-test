@@ -1,6 +1,6 @@
 package org.generator.lui_generator;
 
-import org.Mips;
+import org.mips.Mips;
 import org.generator.Generator;
 import org.util.MipsCode;
 import org.util.RandomUtil;
@@ -26,6 +26,10 @@ public class LuiGenerator extends Generator {
         String codeStr = String.format("lui $%d, %d", rt, imm);
         getMips().putCodeStr(codeStr);
         getMips().putCode(translate(codeStr));
+        if (getMips().isDelaySlot()) {
+            getMips().setDelaySlot(false);
+            return;
+        }
         getMips().check();
     }
 

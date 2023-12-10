@@ -1,6 +1,6 @@
 package org.generator.br_r2_generator;
 
-import org.Mips;
+import org.mips.Mips;
 import org.util.RandomUtil;
 
 /**

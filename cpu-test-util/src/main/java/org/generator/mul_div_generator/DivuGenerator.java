@@ -1,6 +1,6 @@
 package org.generator.mul_div_generator;
 
-import org.Mips;
+import org.mips.Mips;
 import org.util.RandomUtil;
 
 /**

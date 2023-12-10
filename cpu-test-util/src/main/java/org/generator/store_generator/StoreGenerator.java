@@ -1,6 +1,6 @@
 package org.generator.store_generator;
 
-import org.Mips;
+import org.mips.Mips;
 import org.constant.CommonConstant;
 import org.generator.Generator;
 import org.util.MipsCode;
@@ -38,12 +38,15 @@ public abstract class StoreGenerator extends Generator implements CommonConstant
         //随机地址
         int addr = getRandom().randInt(Math.max(4, -0x7fff + baseVal),
                 Math.min(DM_END, 0x7fff + baseVal));
-        addr = alignAddr(addr);
         int offset = addr - baseVal;
         String codeStr = String.format("%s $%d, %d($%d)", type, rt, offset, base);
         getMips().putCodeStr(codeStr);
         getMips().putCode(translate(codeStr));
         getRandom().addValueToDm(addr & 0xfffffffc, getRandom().getRegType(rt));
+        if (getMips().isDelaySlot()) {
+            getMips().setDelaySlot(false);
+            return;
+        }
         getMips().check();
     }
 
@@ -65,11 +68,4 @@ public abstract class StoreGenerator extends Generator implements CommonConstant
      * @return opcode
      */
     public abstract String getOpcode();
-
-    /**
-     * 对齐地址
-     * @param addr 对齐前的地址
-     * @return 对齐后的地址
-     */
-    public abstract int alignAddr(int addr);
 }

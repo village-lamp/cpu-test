@@ -1,5 +1,7 @@
 package org.check.cal_ri_checker;
 
+import org.util.UnsignedInt;
+
 /**
  * andi验证类
  */
@@ -11,6 +13,6 @@ public class AndiChecker extends CalRiChecker {
         if (data == 0L) {
             return null;
         }
-        return data;
+        return UnsignedInt.extend(data);
     }
 }

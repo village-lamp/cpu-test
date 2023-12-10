@@ -18,7 +18,7 @@ public interface RegConstant {
     int MID_REG_END = 25;
 
     //低级寄存器起始
-    int LOW_REG_START = 26;
+    int LOW_REG_START = 28;
 
     //低级寄存器截止
     int LOW_REG_END = 30;

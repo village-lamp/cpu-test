@@ -1,2 +1,0 @@
-D:\programming\gitrepository\github\cpu-test\package\mips.zip
-D:\programming\gitrepository\github\cpu-test\package\resources\test.asm

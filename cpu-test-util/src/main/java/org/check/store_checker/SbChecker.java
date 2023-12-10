@@ -1,13 +1,16 @@
 package org.check.store_checker;
 
+import org.mips.Mips;
+
 /**
  * sb验证类
  */
 public class SbChecker extends StoreChecker {
 
     @Override
-    public boolean isAlign(long addr) {
-        return true;
+    public boolean isExc(long addr) {
+        String hit = Mips.hitHardware(addr);
+        return "none".equals(hit) || "TC0".equals(hit) || "TC1".equals(hit);
     }
 
     @Override

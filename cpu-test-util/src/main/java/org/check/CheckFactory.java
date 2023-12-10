@@ -11,9 +11,12 @@ import org.check.cal_ri_checker.AddiChecker;
 import org.check.cal_ri_checker.AndiChecker;
 import org.check.cal_ri_checker.OriChecker;
 import org.check.cal_rr_checker.*;
+import org.check.eret_checker.EretChecker;
 import org.check.jal_checker.JalChecker;
 import org.check.jr_checker.JrChecker;
 import org.check.lui_checker.LuiChecker;
+import org.check.mfc0_checker.Mfc0Checker;
+import org.check.mtc0_checker.Mtc0Checker;
 import org.check.mul_div_checker.DivChecker;
 import org.check.mul_div_checker.DivuChecker;
 import org.check.mul_div_checker.MultChecker;
@@ -23,9 +26,11 @@ import org.check.mv_fr_checker.MfloChecker;
 import org.check.mv_to_checker.MthiChecker;
 import org.check.mv_to_checker.MtloChecker;
 import org.check.nop_checker.NopChecker;
+import org.check.ri_checker.RiChecker;
 import org.check.store_checker.SbChecker;
 import org.check.store_checker.ShChecker;
 import org.check.store_checker.SwChecker;
+import org.check.syscall_checker.SyscallChecker;
 
 /**
  * check简单工厂类
@@ -90,6 +95,16 @@ public class CheckFactory {
                 return new MtloChecker();
             case "mthi":
                 return new MthiChecker();
+            case "RI":
+                return new RiChecker();
+            case "mfc0":
+                return new Mfc0Checker();
+            case "mtc0":
+                return new Mtc0Checker();
+            case "syscall":
+                return new SyscallChecker();
+            case "eret":
+                return new EretChecker();
             case "nop":
                 return new NopChecker();
         }

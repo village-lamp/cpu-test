@@ -15,6 +15,8 @@ public class CheckAnswer {
             args[0] = scanner.nextLine();
             System.out.println("输入正确结果：");
             args[1] = scanner.nextLine();
+//            args[0] = ".\\out.txt";
+//            args[1] = ".\\stdout.txt";
         }
         Manager.work(args);
     }

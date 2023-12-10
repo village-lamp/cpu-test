@@ -1,12 +1,7 @@
 package org.generator.cal_ri_generator;
 
-import org.Mips;
-import org.generator.Generator;
-import org.util.MipsCode;
+import org.mips.Mips;
 import org.util.RandomUtil;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * ori指令生成器

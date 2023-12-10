@@ -1,9 +1,10 @@
 package org.check.store_checker;
 
-import org.Mips;
+import org.mips.Mips;
 import org.check.Checker;
 import org.constant.CommonConstant;
 import org.util.Hex;
+import org.util.UnsignedInt;
 
 /**
  * store类指令验证抽象类
@@ -21,18 +22,48 @@ public abstract class StoreChecker extends Checker implements CommonConstant {
             offset -= 0x10000;
         }
         long[] regs = mips.getRegs();
-        long addr = regs[base] + offset;
-        //地址错误
-        if (!isAlign(addr) || addr < 0 || addr > DM_END) {
-            return "null";
+        long addr = UnsignedInt.extend(regs[base]) + offset;
+
+        //发生异常
+        if (UnsignedInt.isOverFlow(addr)) {
+            return "ExcCode:5";
         }
+        addr = UnsignedInt.over(addr);
+        if (isExc(addr)) {
+            return "ExcCode:5";
+        }
+
         mips.addPc(4);
-        Long data = mips.getDm().get((int) addr & 0xfffffffc);
-        if (data == null) {
-            data = 0L;
+
+        String hit = Mips.hitHardware(addr);
+        Long data = regs[rt];
+
+        if ("TC0".equals(hit)) {
+           mips.getTc0().write(addr, data);
+           if (addr == TC0_BEGIN + 4 || data <= 1) {
+               return null;
+           }
+           return String.valueOf(((mips.getTc0().getPresent() + 2) * 4)) + '\n';
         }
-        data = storeData(data, regs[rt], addr);
-        if (data == 0L && mips.isGenerate()) {
+        if ("TC1".equals(hit)) {
+            mips.getTc1().write(addr, data);
+            if (addr == TC1_BEGIN + 4 || data <= 1) {
+                return null;
+            }
+            return String.valueOf(((mips.getTc1().getPresent() + 2) * 4)) + '\n';
+        }
+        if ("DM".equals(hit)) {
+            data = mips.getDm().get((int) addr & 0xfffffffc);
+            if (data == null) {
+                data = 0L;
+            }
+            data = storeData(data, regs[rt], addr);
+        }
+        if ("IG".equals(hit)) {
+            return null;
+        }
+
+        if (data == 0L && mips.isGenerate() && !mips.isDelaySlot()) {
             mips.addPc(-4);
             return "none";
         }
@@ -40,10 +71,10 @@ public abstract class StoreChecker extends Checker implements CommonConstant {
     }
 
     /**
-     * 判断是否对齐
-     * @return 是否对齐
+     * 判断是否异常
+     * @return 是否异常
      */
-    public abstract boolean isAlign(long addr);
+    public abstract boolean isExc(long addr);
 
     /**
      * 计算存储到dm的值

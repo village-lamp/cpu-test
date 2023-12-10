@@ -1,6 +1,6 @@
 package org.generator.store_generator;
 
-import org.Mips;
+import org.mips.Mips;
 import org.util.RandomUtil;
 
 public class SbGenerator extends StoreGenerator {
@@ -12,10 +12,5 @@ public class SbGenerator extends StoreGenerator {
     @Override
     public String getOpcode() {
         return "101000";
-    }
-
-    @Override
-    public int alignAddr(int addr) {
-        return addr;
     }
 }

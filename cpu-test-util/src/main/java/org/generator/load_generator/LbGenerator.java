@@ -1,6 +1,6 @@
 package org.generator.load_generator;
 
-import org.Mips;
+import org.mips.Mips;
 import org.util.RandomUtil;
 
 public class LbGenerator extends LoadGenerator {

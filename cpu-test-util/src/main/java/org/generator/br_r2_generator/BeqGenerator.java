@@ -1,7 +1,7 @@
 package org.generator.br_r2_generator;
 
 import org.constant.CommonConstant;
-import org.Mips;
+import org.mips.Mips;
 import org.constant.RegConstant;
 import org.util.RandomUtil;
 
