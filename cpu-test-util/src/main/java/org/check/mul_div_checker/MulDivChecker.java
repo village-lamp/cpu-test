@@ -19,6 +19,11 @@ public abstract class MulDivChecker extends Checker {
         long[] regs = mips.getRegs();
         long[] data = calc(regs[rs], regs[rt]);
         if (data != null) {
+
+            if (mips.isGenerate()) {
+                return "none";
+            }
+
             long hi = UnsignedInt.over(data[0]);
             long lo = UnsignedInt.over(data[1]);
             mips.setReg(32, hi);

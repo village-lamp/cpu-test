@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="cpu-test-util:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="65bae892-d00f-4e4d-8b58-9b3398c4102b" name="更改" comment="add weight of code generation;&#10;decrease the ratio of 0 generation;">
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/check/CheckFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/check/CheckFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/check/mul_div_checker/MulDivChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/check/mul_div_checker/MulDivChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/check/LoadChecker/LhCheckerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/check/store_checker/SbCheckerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/check/store_checker/ShCheckerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/generator/OriGeneratorTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/util/UnsignedIntTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/test.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/cpu-test-util.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../package/cpu-test-util.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/mips/mips_tb.v" beforeDir="false" afterPath="$PROJECT_DIR$/../package/resources/mips/mips_tb.v" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Enum" />
+        <option value="JUnit4 Test Class" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2XI1XwZgmk2zwA3KKKMbu5SXwSH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit4&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/项目/vpp-cloud&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;工件&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;two.files.diff.last.used.file&quot;: &quot;D:/programming/gitrepository/github/cpu-test/cpu-test-util/stdout.txt&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\programming\gitrepository\github\cpu-test\cpu-test-util" />
+      <recent name="D:\programming\gitrepository\github\cpu-test\cpu-test-util\resources" />
+      <recent name="D:\programming\gitrepository\github\cpu-test\cpu-test-util\src\main" />
+      <recent name="D:\programming\gitrepository\github\cpu-test\cpu-test-util\src" />
+      <recent name="C:\Users\24949\Desktop\tools\co-eda-vm\share\logisim\P3\auto-test-and-assistant\src\main\resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\programming\gitrepository\github\cpu-test\cpu-test-util" />
+      <recent name="D:\programming\gitrepository\github\cpu-test\cpu-test-util\src" />
+      <recent name="C:\Users\24949\Desktop\tools\co-eda-vm\share\logisim\P3\auto-test-and-assistant" />
+      <recent name="C:\Users\24949\Desktop\tools\co-eda-vm\share\logisim\P3\auto-test-and-assistant\src\main\resources" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.generator.ri_generator" />
+      <recent name="org.check.store_checker" />
+      <recent name="org.check.LoadChecker" />
+      <recent name="org.util" />
+      <recent name="org.generator" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.data_generater" />
+    </key>
+  </component>
+  <component name="RunManager" selected="应用程序.CheckAnswer">
+    <configuration name="CheckAnswer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.check_answer.CheckAnswer" />
+      <module name="cpu-test-util" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.check_answer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DataGenerator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.data_generator.DataGenerator" />
+      <module name="cpu-test-util" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.data_generator.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RunAsm" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.run_asm.RunAsm" />
+      <module name="cpu-test-util" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.run_asm.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LhCheckerTest.loadData" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="cpu-test-util" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.check.LoadChecker.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.check.LoadChecker" />
+      <option name="MAIN_CLASS_NAME" value="org.check.LoadChecker.LhCheckerTest" />
+      <option name="METHOD_NAME" value="loadData" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RiGeneratorTest.generate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="cpu-test-util" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.generator.ri_generator.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.generator.ri_generator" />
+      <option name="MAIN_CLASS_NAME" value="org.generator.ri_generator.RiGeneratorTest" />
+      <option name="METHOD_NAME" value="generate" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="auto-test" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.12 (auto-test)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/out/artifacts/auto_test_and_assistant_jar" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/out/artifacts/auto_test_and_assistant_jar/auto-test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="应用程序.CheckAnswer" />
+        <item itemvalue="应用程序.RunAsm" />
+        <item itemvalue="应用程序.DataGenerator" />
+        <item itemvalue="JUnit.LhCheckerTest.loadData" />
+        <item itemvalue="JUnit.RiGeneratorTest.generate" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="65bae892-d00f-4e4d-8b58-9b3398c4102b" name="更改" comment="" />
+      <created>1698301822697</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1698301822697</updated>
+      <workItem from="1698301823831" duration="3963000" />
+      <workItem from="1698308808246" duration="7201000" />
+      <workItem from="1698317592132" duration="9235000" />
+      <workItem from="1698327730144" duration="3260000" />
+      <workItem from="1698335929010" duration="839000" />
+      <workItem from="1698386450723" duration="209000" />
+      <workItem from="1698386868325" duration="4822000" />
+      <workItem from="1698392952902" duration="5777000" />
+      <workItem from="1698417105506" duration="69000" />
+      <workItem from="1698492789553" duration="536000" />
+      <workItem from="1698493482040" duration="78000" />
+      <workItem from="1698493817728" duration="8555000" />
+      <workItem from="1698509130037" duration="335000" />
+      <workItem from="1698545619769" duration="5740000" />
+      <workItem from="1698574856513" duration="599000" />
+      <workItem from="1698653737849" duration="30000" />
+      <workItem from="1698849864656" duration="115000" />
+      <workItem from="1698886813323" duration="2275000" />
+      <workItem from="1698904778240" duration="8548000" />
+      <workItem from="1698914269682" duration="5275000" />
+      <workItem from="1698927484131" duration="10137000" />
+      <workItem from="1698975827340" duration="5489000" />
+      <workItem from="1698984051628" duration="634000" />
+      <workItem from="1698984745199" duration="19000" />
+      <workItem from="1698994275626" duration="1394000" />
+      <workItem from="1698997438426" duration="2778000" />
+      <workItem from="1699000431627" duration="16000" />
+      <workItem from="1699367510365" duration="620000" />
+      <workItem from="1699454318129" duration="7000" />
+      <workItem from="1699527268623" duration="9001000" />
+      <workItem from="1699605760100" duration="2776000" />
+      <workItem from="1699622803594" duration="43208000" />
+      <workItem from="1699758466255" duration="4141000" />
+      <workItem from="1699765907792" duration="6248000" />
+      <workItem from="1699784181113" duration="706000" />
+      <workItem from="1700317941666" duration="12000" />
+      <workItem from="1700317960973" duration="4246000" />
+      <workItem from="1700377656290" duration="371000" />
+      <workItem from="1700643333971" duration="1433000" />
+      <workItem from="1700657306355" duration="10552000" />
+      <workItem from="1700668082633" duration="662000" />
+      <workItem from="1700718732765" duration="2146000" />
+      <workItem from="1701574313575" duration="887000" />
+      <workItem from="1701600322033" duration="1206000" />
+      <workItem from="1701781100754" duration="11000" />
+      <workItem from="1701787483283" duration="370000" />
+      <workItem from="1701792074091" duration="2621000" />
+      <workItem from="1701874744956" duration="5188000" />
+      <workItem from="1701929019279" duration="5437000" />
+      <workItem from="1701956374966" duration="1967000" />
+      <workItem from="1701959246096" duration="3417000" />
+      <workItem from="1702020128782" duration="20316000" />
+      <workItem from="1702050827838" duration="3202000" />
+      <workItem from="1702086729077" duration="14047000" />
+      <workItem from="1702182825188" duration="11836000" />
+      <workItem from="1702199564496" duration="1236000" />
+      <workItem from="1702214852669" duration="15000" />
+      <workItem from="1702214880501" duration="674000" />
+      <workItem from="1702217591957" duration="56000" />
+      <workItem from="1702260738860" duration="46000" />
+      <workItem from="1702307054292" duration="407000" />
+    </task>
+    <task id="LOCAL-00001" summary="add auto-test-verilog &amp; revise generator">
+      <option name="closed" value="true" />
+      <created>1698933183803</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1698933183803</updated>
+    </task>
+    <task id="LOCAL-00002" summary="revise check &amp; partly add run">
+      <option name="closed" value="true" />
+      <created>1698937632055</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1698937632055</updated>
+    </task>
+    <task id="LOCAL-00003" summary="complete run">
+      <option name="closed" value="true" />
+      <created>1698980105185</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1698980105185</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add cpu-test-verilog.py &amp; revise generate&amp;check">
+      <option name="closed" value="true" />
+      <created>1698984621366</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1698984621366</updated>
+    </task>
+    <task id="LOCAL-00005" summary="finished first P5">
+      <option name="closed" value="true" />
+      <created>1699628844777</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1699628844777</updated>
+    </task>
+    <task id="LOCAL-00006" summary="revise P5 generator">
+      <option name="closed" value="true" />
+      <created>1699682212989</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1699682212989</updated>
+    </task>
+    <task id="LOCAL-00007" summary="add zero">
+      <option name="closed" value="true" />
+      <created>1699784885181</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1699784885181</updated>
+    </task>
+    <task id="LOCAL-00008" summary="update to P6">
+      <option name="closed" value="true" />
+      <created>1700667694310</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1700667694310</updated>
+    </task>
+    <task id="LOCAL-00009" summary="add weight of code generation;&#10;decrease the ratio of 0 generation;">
+      <option name="closed" value="true" />
+      <created>1700720875648</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1700720875648</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.asm" />
+    <option featureType="com.intellij.configurationType" implementationName="PythonConfigurationType" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.v" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add auto-test-verilog &amp; revise generator" />
+    <MESSAGE value="revise check &amp; partly add run" />
+    <MESSAGE value="complete run" />
+    <MESSAGE value="add cpu-test-verilog.py &amp; revise generate&amp;check" />
+    <MESSAGE value="finished first P5" />
+    <MESSAGE value="revise P5 generator" />
+    <MESSAGE value="add zero" />
+    <MESSAGE value="update to P6" />
+    <MESSAGE value="add weight of code generation;&#10;decrease the ratio of 0 generation;" />
+    <option name="LAST_COMMIT_MESSAGE" value="add weight of code generation;&#10;decrease the ratio of 0 generation;" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/check_answer_logisim/CheckAnswer.java</url>
+          <line>20</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/mips/Mips.java</url>
+          <line>99</line>
+          <option name="timeStamp" value="254" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="org.data_generator.generator.LwGenerator" memberName="base" />
+      </pinned-members>
+    </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="generators.get(op)" language="JAVA" />
+        <watch expression="pc" language="JAVA" />
+        <watch expression="lastPc" language="JAVA" />
+        <watch expression="getRandom().getLine(pc)" language="JAVA" />
+        <watch expression="mips.tc0" language="JAVA" />
+        <watch expression="mips.pc" language="JAVA" />
+        <watch expression="mips.block" language="JAVA" />
+        <watch expression="mips.regs" language="JAVA" />
+        <watch expression="regs" language="JAVA" />
+        <watch expression="mips.tc1" language="JAVA" />
+        <watch expression="regs[32]" language="JAVA" />
+        <watch expression="mips.regs[18]" />
+        <watch expression="out.get(pos)" language="JAVA" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Manager_java$MipsCodeTest.ic" NAME="MipsCodeTest 覆盖结果" MODIFIED="1699626496499" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>org.util.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/auto_test_py$AutoTestVerilog.ic" NAME="AutoTestVerilog 覆盖结果" MODIFIED="1698935655610" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>org.auto_test_verilog.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/auto_test_py$CheckAnswer.ic" NAME="CheckAnswer 覆盖结果" MODIFIED="1698495735899" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>org.check_answer.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/auto_test_py$DataGenerator.ic" NAME="DataGenerator 覆盖结果" MODIFIED="1698499126054" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>org.data_generator.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Manager_java$DataGenerator.ic" NAME="DataGenerator 覆盖结果" MODIFIED="1699701072096" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>org.data_generator.*</FILTER>
+    </SUITE>
+  </component>
+</project>

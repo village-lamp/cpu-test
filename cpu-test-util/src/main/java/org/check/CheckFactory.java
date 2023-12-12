@@ -1,7 +1,5 @@
 package org.check;
 
-import com.sun.org.apache.xpath.internal.operations.Div;
-import com.sun.org.apache.xpath.internal.operations.Mult;
 import org.check.LoadChecker.LbChecker;
 import org.check.LoadChecker.LhChecker;
 import org.check.LoadChecker.LwChecker;
