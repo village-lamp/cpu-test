@@ -10,16 +10,126 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65bae892-d00f-4e4d-8b58-9b3398c4102b" name="更改" comment="add weight of code generation;&#10;decrease the ratio of 0 generation;">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/check/CheckFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/check/CheckFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/check/mul_div_checker/MulDivChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/check/mul_div_checker/MulDivChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/check/LoadChecker/LhCheckerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/check/store_checker/SbCheckerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/check/store_checker/ShCheckerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/generator/OriGeneratorTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/util/UnsignedIntTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/test.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../package/cpu-test-util.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../package/cpu-test-util.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../package/resources/mips/mips_tb.v" beforeDir="false" afterPath="$PROJECT_DIR$/../package/resources/mips/mips_tb.v" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/data_generator/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/data_generator/Manager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/in.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/Mips.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/CheckFactory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/Checker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/LoadChecker/LbChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/LoadChecker/LhChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/LoadChecker/LoadChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/LoadChecker/LwChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/br_r2_checker/BeqChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/br_r2_checker/BneChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/br_r2_checker/BrR2Checker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/cal_ri_checker/AddiChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/cal_ri_checker/AndiChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/cal_ri_checker/CalRiChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/cal_ri_checker/OriChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/cal_rr_checker/AddChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/cal_rr_checker/AndChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/cal_rr_checker/CalRrChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/cal_rr_checker/OrChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/cal_rr_checker/SltChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/cal_rr_checker/SltuChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/cal_rr_checker/SubChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/jal_checker/JalChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/jr_checker/JrChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/lui_checker/LuiChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/mul_div_checker/DivChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/mul_div_checker/DivuChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/mul_div_checker/MulDivChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/mul_div_checker/MultChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/mul_div_checker/MultuChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/mv_fr_checker/MfhiChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/mv_fr_checker/MfloChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/mv_fr_checker/MvFrChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/mv_to_checker/MthiChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/mv_to_checker/MtloChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/mv_to_checker/MvToChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/nop_checker/NopChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/store_checker/SbChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/store_checker/ShChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/store_checker/StoreChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check/store_checker/SwChecker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check_answer/CheckAnswer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/check_answer/Manager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/constant/CommonConstant.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/constant/RegConstant.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/data_generator/DataGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/data_generator/Manager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/depress_mips/DepressMips.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/depress_mips/Manager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/Generator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/br_r2_generator/BeqGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/br_r2_generator/BneGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/br_r2_generator/BrR2Generator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/cal_ri_generator/AddiGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/cal_ri_generator/AndiGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/cal_ri_generator/CalRiGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/cal_ri_generator/OriGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/cal_rr_generator/AddGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/cal_rr_generator/AndGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/cal_rr_generator/CalRrGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/cal_rr_generator/OrGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/cal_rr_generator/SltGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/cal_rr_generator/SltuGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/cal_rr_generator/SubGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/jal_generator/JalGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/jr_generator/JrGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/load_generator/LbGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/load_generator/LhGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/load_generator/LoadGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/load_generator/LwGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/lui_generator/LuiGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/mul_div_generator/DivGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/mul_div_generator/DivuGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/mul_div_generator/MulDivGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/mul_div_generator/MultGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/mul_div_generator/MultuGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/mv_fr_generator/MfhiGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/mv_fr_generator/MfloGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/mv_fr_generator/MvFrGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/mv_to_generator/MthiGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/mv_to_generator/MtloGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/mv_to_generator/MvToGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/store_generator/SbGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/store_generator/ShGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/store_generator/StoreGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/generator/store_generator/SwGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/run_asm/Manager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/run_asm/RunAsm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/util/Hex.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/util/MipsCode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/util/RandomUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/util/UnsignedInt.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/andiaddi/andiaddi.asm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/andiaddi/code.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/andiaddi/out.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/andiaddi/stdout.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/andor/andor.asm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/andor/code.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/andor/out.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/andor/stdout.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/divudiv/code.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/divudiv/divudiv.asm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/divudiv/out.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/divudiv/stdout.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/mtlomthi/code.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/mtlomthi/mtlomthi.asm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/mtlomthi/out.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/mtlomthi/stdout.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/sbshlblh/code.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/sbshlblh/out.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/sbshlblh/sbshlblh.asm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/sbshlblh/stdout.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/sltuslt/code.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/sltuslt/out.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/sltuslt/sltuslt.asm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package/resources/test/sltuslt/stdout.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -282,6 +392,7 @@
       <workItem from="1702217591957" duration="56000" />
       <workItem from="1702260738860" duration="46000" />
       <workItem from="1702307054292" duration="407000" />
+      <workItem from="1702363018037" duration="81000" />
     </task>
     <task id="LOCAL-00001" summary="add auto-test-verilog &amp; revise generator">
       <option name="closed" value="true" />
